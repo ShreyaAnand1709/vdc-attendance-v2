@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+
+<html class="h-full" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>EduManage - Enter Marks</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary-fixed-dim": "#99cbff",
+                    "surface-container": "#eceef0",
+                    "secondary-fixed": "#cfe5ff",
+                    "on-background": "#191c1e",
+                    "tertiary": "#005c15",
+                    "inverse-primary": "#a9c7ff",
+                    "outline-variant": "#c2c6d4",
+                    "on-primary-fixed": "#001b3d",
+                    "on-primary-container": "#dae5ff",
+                    "surface": "#f7f9fb",
+                    "primary-container": "#1565c0",
+                    "on-surface": "#191c1e",
+                    "on-primary-fixed-variant": "#00468c",
+                    "error": "#ba1a1a",
+                    "on-tertiary-fixed": "#002204",
+                    "inverse-surface": "#2d3133",
+                    "primary-fixed-dim": "#a9c7ff",
+                    "on-tertiary": "#ffffff",
+                    "surface-tint": "#005db7",
+                    "inverse-on-surface": "#eff1f3",
+                    "secondary-container": "#4fafff",
+                    "on-surface-variant": "#424752",
+                    "surface-variant": "#e0e3e5",
+                    "surface-container-highest": "#e0e3e5",
+                    "secondary": "#00629d",
+                    "surface-dim": "#d8dadc",
+                    "on-tertiary-container": "#a5f99e",
+                    "tertiary-container": "#25752b",
+                    "on-tertiary-fixed-variant": "#005312",
+                    "surface-container-low": "#f2f4f6",
+                    "error-container": "#ffdad6",
+                    "primary": "#004d99",
+                    "on-secondary-fixed-variant": "#004a78",
+                    "primary-fixed": "#d6e3ff",
+                    "surface-container-high": "#e6e8ea",
+                    "tertiary-fixed": "#a3f69c",
+                    "on-error-container": "#93000a",
+                    "on-error": "#ffffff",
+                    "surface-container-lowest": "#ffffff",
+                    "outline": "#727783",
+                    "background": "#f7f9fb",
+                    "on-secondary": "#ffffff",
+                    "on-primary": "#ffffff",
+                    "tertiary-fixed-dim": "#88d982",
+                    "surface-bright": "#f7f9fb",
+                    "on-secondary-fixed": "#001d34",
+                    "on-secondary-container": "#004069"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "touch-target": "48px",
+                    "margin-desktop": "32px",
+                    "margin-tablet": "24px",
+                    "unit": "8px",
+                    "margin-mobile": "16px",
+                    "gutter": "16px"
+            },
+            "fontFamily": {
+                    "title-md": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "display-lg": ["Inter"],
+                    "title-lg": ["Inter"],
+                    "headline-lg-mobile": ["Inter"],
+                    "body-md": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "label-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "title-md": ["16px", {"lineHeight": "24px", "letterSpacing": "0.15px", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "600"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "letterSpacing": "0.5px", "fontWeight": "400"}],
+                    "display-lg": ["57px", {"lineHeight": "64px", "letterSpacing": "-0.25px", "fontWeight": "700"}],
+                    "title-lg": ["22px", {"lineHeight": "28px", "fontWeight": "500"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "600"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.25px", "fontWeight": "400"}],
+                    "label-sm": ["11px", {"lineHeight": "16px", "letterSpacing": "0.5px", "fontWeight": "500"}],
+                    "headline-md": ["28px", {"lineHeight": "36px", "fontWeight": "500"}],
+                    "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.1px", "fontWeight": "500"}]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        /* Modern Corporate Aesthetic - Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #c2c6d4;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #727783;
+        }
+        
+        /* Remove arrows from number inputs for cleaner UI */
+        input[type="number"]::-webkit-inner-spin-button, 
+        input[type="number"]::-webkit-outer-spin-button { 
+            -webkit-appearance: none; 
+            margin: 0; 
+        }
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
+
+        .student-row {
+            transition: background-color 0.2s ease;
+        }
+        .student-row:hover {
+            background-color: theme('colors.surface-container-low');
+        }
+        .input-error {
+            border-color: theme('colors.error') !important;
+            color: theme('colors.error') !important;
+            background-color: theme('colors.error-container') !important;
+        }
+        
+        /* Ambient shadows */
+        .shadow-level-1 {
+            box-shadow: 0 2px 4px rgba(21, 101, 192, 0.05);
+        }
+        .shadow-level-2 {
+            box-shadow: 0 6px 12px rgba(21, 101, 192, 0.08);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-full flex flex-col antialiased">
+<!-- TopAppBar -->
+<header class="bg-surface text-primary font-headline-md border-b border-outline-variant flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop h-touch-target sticky top-0 z-40">
+<div class="flex items-center gap-4">
+<button class="text-on-surface-variant hover:bg-surface-container-low rounded-full p-2 transition-colors active:scale-95 duration-100 flex items-center justify-center h-10 w-10">
+<span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
+</button>
+<h1 class="text-title-lg font-title-lg font-bold text-primary truncate max-w-[200px] md:max-w-none">EduManage</h1>
+</div>
+<div class="flex items-center">
+<div class="h-8 w-8 rounded-full overflow-hidden border border-outline-variant cursor-pointer hover:bg-surface-container-low transition-colors active:scale-95 duration-100">
+<img alt="Teacher Profile Picture" class="h-full w-full object-cover" data-alt="Professional portrait of a teacher in a modern, well-lit academic setting. The lighting is soft and bright, emphasizing a clean, corporate educational aesthetic. The background is slightly blurred showing subtle hints of a classroom." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDOFxVZieHVXGcZDD-b42nMu6-Yl3SFJJdEN31RExZWobkCtdVVdtA99pIm0Tyu3d_44VTlsKr5WgZFJLvJokwSun7MTxxknvSdiEnIQrHBqIM2hIFjzasf1D_0cId70IXweh7ahKGrnAwKtEzlPsZVSj463haWL9q3ttIVpqgAie0xY2iug6DLV8EK46XNSl-n1HH0lH1t0ldb5OLVIlg9Nojyu33rsDE5LPg56tcFJrVZ4GtRJKyVuQ"/>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-grow flex flex-col md:max-w-[800px] md:mx-auto md:w-full w-full relative pb-[120px]">
+<!-- Header Section -->
+<section class="bg-surface px-margin-mobile md:px-margin-desktop py-6 border-b border-surface-variant z-30 sticky top-touch-target">
+<div class="flex flex-col gap-unit">
+<div class="flex items-start justify-between">
+<div>
+<h2 class="text-headline-lg-mobile md:text-headline-lg font-headline-lg-mobile md:font-headline-lg text-on-background">Midterm - Data Structures</h2>
+<p class="text-body-lg font-body-lg text-on-surface-variant mt-1">CS301 • Section A • Fall 2024</p>
+</div>
+<div class="bg-primary-container text-on-primary-container rounded-lg px-4 py-2 flex flex-col items-center justify-center min-w-[80px]">
+<span class="text-label-sm font-label-sm uppercase tracking-wider">Max Marks</span>
+<span class="text-title-lg font-title-lg font-bold">50</span>
+</div>
+</div>
+<!-- Search Bar -->
+<div class="mt-4 relative group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline group-focus-within:text-primary transition-colors">search</span>
+<input class="w-full h-touch-target pl-10 pr-4 bg-surface-container-low border border-outline-variant rounded-lg text-body-lg font-body-lg text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all" placeholder="Search student name or ID..." type="text"/>
+</div>
+<!-- Stats / Progress (Sticky subtle) -->
+<div class="flex items-center justify-between mt-4 text-label-lg font-label-lg text-on-surface-variant">
+<div class="flex items-center gap-2">
+<span class="h-2 w-2 rounded-full bg-tertiary"></span>
+<span>Entered: <strong class="text-on-surface" id="entered-count">0</strong>/45</span>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-primary">sort</span>
+<span>Sort: ID</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Student List -->
+<section class="flex flex-col pt-2">
+<!-- List Items -->
+<div class="flex flex-col divide-y divide-surface-variant">
+<!-- Student 1 -->
+<article class="student-row px-margin-mobile md:px-margin-desktop py-4 flex items-center justify-between min-h-[72px] bg-surface">
+<div class="flex items-center gap-4 flex-grow">
+<div class="h-12 w-12 rounded-full bg-surface-container overflow-hidden flex-shrink-0">
+<img alt="Student avatar" class="h-full w-full object-cover" data-alt="Headshot of a university student looking attentive. Bright, natural lighting, modern clean educational setting. Corporate professional style with deep blue and white tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDOJRiDJc7B20g61abpE8CWuFd00iaKudL2uG1ndd4RwJMSu0MfEa7_YPPigwj58_QnUbE8K7hmeV6o0F-s0AjXzj-Lap81kqrCurmkW2FC4Jn0iRAEcL0TANljOfXS1OozFTkbXiaYn-fZRlyF7AMny-A3s2nbvrFI1T4or8DG00N0CfbI-ecbIx6spZgql3GY8pb1aNXpE3epNXM_LwhJZ6gZ6929ulXZ8OjWT7745uNRqRTGxm_yFw"/>
+</div>
+<div class="flex flex-col">
+<span class="text-title-md font-title-md text-on-background">Abigail Chen</span>
+<span class="text-body-md font-body-md text-on-surface-variant">ID: 2024-CS-001</span>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<div class="relative w-[80px]">
+<input class="mark-input w-full h-touch-target text-center text-title-lg font-title-lg bg-surface border border-outline-variant rounded-lg focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary-container transition-all" data-max="50" placeholder="--" type="number"/>
+</div>
+</div>
+</article>
+<!-- Student 2 -->
+<article class="student-row px-margin-mobile md:px-margin-desktop py-4 flex items-center justify-between min-h-[72px] bg-surface">
+<div class="flex items-center gap-4 flex-grow">
+<div class="h-12 w-12 rounded-full bg-surface-container overflow-hidden flex-shrink-0 flex items-center justify-center text-on-surface-variant text-title-md font-title-md">
+                            BS
+                        </div>
+<div class="flex flex-col">
+<span class="text-title-md font-title-md text-on-background">Benjamin Smith</span>
+<span class="text-body-md font-body-md text-on-surface-variant">ID: 2024-CS-002</span>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<div class="relative w-[80px]">
+<input class="mark-input w-full h-touch-target text-center text-title-lg font-title-lg bg-surface border border-outline-variant rounded-lg focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary-container transition-all" data-max="50" placeholder="--" type="number"/>
+</div>
+</div>
+</article>
+<!-- Student 3 (Error State Example) -->
+<article class="student-row px-margin-mobile md:px-margin-desktop py-4 flex items-center justify-between min-h-[72px] bg-surface">
+<div class="flex items-center gap-4 flex-grow">
+<div class="h-12 w-12 rounded-full bg-surface-container overflow-hidden flex-shrink-0">
+<img alt="Student avatar" class="h-full w-full object-cover" data-alt="Headshot of a confident university student. Clean, bright, light-mode educational aesthetic. High contrast, professional." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAB0q65IDwW6UcPEaLz4Ll0bQYr0oRI_9IuUsFriMHuxgr34nqAHPhjpTgcSAfu1wtUA9bV9e8iKAhkb7zayvlRSEeOrRJabI3npGboSr1bnLQjRhCCL38Fv71lbyuDUJLBn0uaBfPg_Peox3rgE1ycQIoLNmvK3IhRa3b9XqjdCCixVt_-O2gO4DS14peXbdKXVMbFxpiFsXIRbHOP3ugaC5lp7dSJQgfDuv8M4D-hG7dkTniTeqabqA"/>
+</div>
+<div class="flex flex-col">
+<span class="text-title-md font-title-md text-on-background">Chloe Davis</span>
+<span class="text-body-md font-body-md text-on-surface-variant">ID: 2024-CS-003</span>
+<span class="text-label-sm font-label-sm text-error hidden error-msg">Exceeds max</span>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<div class="relative w-[80px]">
+<input class="mark-input w-full h-touch-target text-center text-title-lg font-title-lg bg-surface border border-outline-variant rounded-lg focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary-container transition-all" data-max="50" placeholder="--" type="number" value="55"/>
+</div>
+</div>
+</article>
+<!-- Student 4 (Filled State) -->
+<article class="student-row px-margin-mobile md:px-margin-desktop py-4 flex items-center justify-between min-h-[72px] bg-surface">
+<div class="flex items-center gap-4 flex-grow">
+<div class="h-12 w-12 rounded-full bg-surface-container overflow-hidden flex-shrink-0 flex items-center justify-center text-on-surface-variant text-title-md font-title-md">
+                            DG
+                        </div>
+<div class="flex flex-col">
+<span class="text-title-md font-title-md text-on-background">David Garcia</span>
+<span class="text-body-md font-body-md text-on-surface-variant">ID: 2024-CS-004</span>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<div class="relative w-[80px]">
+<input class="mark-input w-full h-touch-target text-center text-title-lg font-title-lg bg-surface border border-outline-variant rounded-lg focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary-container transition-all" data-max="50" placeholder="--" type="number" value="42"/>
+</div>
+</div>
+</article>
+<!-- Spacer for bottom bar -->
+<div class="h-24"></div>
+</div>
+</section>
+</main>
+<!-- Sticky Bottom Action Bar -->
+<div class="fixed bottom-0 left-0 w-full bg-surface border-t border-outline-variant p-4 shadow-level-2 z-50 flex flex-col md:flex-row items-center justify-between gap-4 md:px-margin-desktop px-margin-mobile">
+<div class="w-full md:w-1/3">
+<div class="flex justify-between text-label-sm font-label-sm text-on-surface-variant mb-1">
+<span>Entry Progress</span>
+<span>2/45 (4%)</span>
+</div>
+<div class="w-full bg-surface-container rounded-full h-2">
+<div class="bg-primary h-2 rounded-full" style="width: 4%"></div>
+</div>
+</div>
+<div class="w-full md:w-auto flex gap-4">
+<button class="flex-1 md:flex-none h-touch-target px-6 rounded-lg text-primary font-label-lg font-bold hover:bg-surface-container transition-colors flex items-center justify-center">
+                CANCEL
+            </button>
+<button class="flex-1 md:flex-none h-touch-target px-8 rounded-lg bg-primary text-on-primary font-label-lg font-bold shadow-level-1 hover:bg-on-primary-fixed-variant transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined" data-icon="save">save</span>
+                SAVE MARKS
+            </button>
+</div>
+</div>
+<!-- Navigation Drawer / Bottom Nav Suppressed (Linear/Task-Focused Intent) -->
+<!-- As per instructions, this is a linear task-focused screen (data entry) that implies a departure from main navigation. Shell navigation is excluded. -->
+<script>
+        // Simple inline validation script for demonstration
+        document.addEventListener('DOMContentLoaded', () => {
+            const inputs = document.querySelectorAll('.mark-input');
+            const enteredCountDisplay = document.getElementById('entered-count');
+            
+            function updateValidationAndCount() {
+                let count = 0;
+                inputs.forEach(input => {
+                    const val = input.value;
+                    const max = parseInt(input.getAttribute('data-max'), 10);
+                    const errorMsg = input.closest('.student-row').querySelector('.error-msg');
+                    
+                    if (val !== '') {
+                        count++;
+                        if (parseInt(val, 10) > max) {
+                            input.classList.add('input-error');
+                            if(errorMsg) errorMsg.classList.remove('hidden');
+                        } else {
+                            input.classList.remove('input-error');
+                            if(errorMsg) errorMsg.classList.add('hidden');
+                        }
+                    } else {
+                        input.classList.remove('input-error');
+                        if(errorMsg) errorMsg.classList.add('hidden');
+                    }
+                });
+                if(enteredCountDisplay) enteredCountDisplay.textContent = count;
+            }
+
+            inputs.forEach(input => {
+                input.addEventListener('input', updateValidationAndCount);
+            });
+            
+            // Initial check to highlight pre-filled errors (like student 3)
+            updateValidationAndCount();
+        });
+    </script>
+</body></html>

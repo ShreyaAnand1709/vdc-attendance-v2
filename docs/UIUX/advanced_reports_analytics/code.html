@@ -1,0 +1,481 @@
+<!DOCTYPE html><html class="light" lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>VDC Teacher - Reports Analytics</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-primary": "#ffffff",
+                        "tertiary": "#005c15",
+                        "tertiary-container": "#25752b",
+                        "primary-fixed-dim": "#a9c7ff",
+                        "error-container": "#ffdad6",
+                        "surface-bright": "#f7f9fb",
+                        "surface": "#f7f9fb",
+                        "on-error": "#ffffff",
+                        "surface-container-high": "#e6e8ea",
+                        "surface-container-highest": "#e0e3e5",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary-fixed": "#001d34",
+                        "tertiary-fixed-dim": "#88d982",
+                        "on-primary-fixed": "#001b3d",
+                        "primary-fixed": "#d6e3ff",
+                        "on-primary-fixed-variant": "#00468c",
+                        "on-error-container": "#93000a",
+                        "surface-tint": "#005db7",
+                        "on-secondary-container": "#004069",
+                        "secondary-fixed-dim": "#99cbff",
+                        "surface-container": "#eceef0",
+                        "on-surface": "#191c1e",
+                        "primary": "#004d99",
+                        "on-tertiary": "#ffffff",
+                        "secondary-container": "#4fafff",
+                        "on-secondary": "#ffffff",
+                        "outline": "#727783",
+                        "on-secondary-fixed-variant": "#004a78",
+                        "on-primary-container": "#dae5ff",
+                        "error": "#ba1a1a",
+                        "surface-dim": "#d8dadc",
+                        "secondary": "#00629d",
+                        "inverse-primary": "#a9c7ff",
+                        "tertiary-fixed": "#a3f69c",
+                        "inverse-on-surface": "#eff1f3",
+                        "on-background": "#191c1e",
+                        "on-tertiary-fixed-variant": "#005312",
+                        "surface-container-low": "#f2f4f6",
+                        "surface-variant": "#e0e3e5",
+                        "on-tertiary-container": "#a5f99e",
+                        "secondary-fixed": "#cfe5ff",
+                        "on-tertiary-fixed": "#002204",
+                        "inverse-surface": "#2d3133",
+                        "on-surface-variant": "#424752",
+                        "outline-variant": "#c2c6d4",
+                        "background": "#f7f9fb",
+                        "primary-container": "#1565c0"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    spacing: {
+                        "margin-tablet": "24px",
+                        "touch-target": "48px",
+                        "unit": "8px",
+                        "margin-desktop": "32px",
+                        "gutter": "16px",
+                        "margin-mobile": "16px"
+                    },
+                    fontFamily: {
+                        "label-lg": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "title-md": ["Inter"],
+                        "title-lg": ["Inter"]
+                    },
+                    fontSize: {
+                        "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.1px", "fontWeight": "500" }],
+                        "headline-md": ["28px", { "lineHeight": "36px", "fontWeight": "500" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.25px", "fontWeight": "400" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "letterSpacing": "0.5px", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["28px", { "lineHeight": "36px", "fontWeight": "600" }],
+                        "display-lg": ["57px", { "lineHeight": "64px", "letterSpacing": "-0.25px", "fontWeight": "700" }],
+                        "label-sm": ["11px", { "lineHeight": "16px", "letterSpacing": "0.5px", "fontWeight": "500" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "600" }],
+                        "title-md": ["16px", { "lineHeight": "24px", "letterSpacing": "0.15px", "fontWeight": "600" }],
+                        "title-lg": ["22px", { "lineHeight": "28px", "fontWeight": "500" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .elevation-0 { box-shadow: none; }
+        .elevation-1 { box-shadow: 0 2px 4px rgba(21, 101, 192, 0.05); }
+        .elevation-2 { box-shadow: 0 6px 12px rgba(21, 101, 192, 0.08); }
+        
+        body {
+            -webkit-tap-highlight-color: transparent;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-background text-on-background min-h-screen flex flex-col md:flex-row pb-[80px] md:pb-0 overflow-x-hidden">
+<!-- Navigation Drawer (Desktop) -->
+<nav class="hidden md:flex flex-col py-6 gap-2 bg-surface dark:bg-surface-dim shadow-lg dark:shadow-none h-full w-80 fixed left-0 top-0 z-[60]">
+<div class="px-6 mb-8 flex items-center gap-4">
+<div class="w-12 h-12 rounded-full overflow-hidden bg-surface-variant flex-shrink-0">
+<img alt="Teacher Portrait" class="w-full h-full object-cover" data-alt="A professional portrait of a teacher in an academic setting, well-lit, soft depth of field, modern corporate aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB2U_0TE7U60OauwolXgz0PqlytGAeGZB6wwFNWeHCIQ7L8EV_E5TPoHjpzMgsvRtS_3mj-kjhOQE-pf5YNeB9f6LmJv2on7DmzmterzgRjswXhEQjzSCjjNeTBnK2UHQpBc5r9PszUYImTPF8AQ7sSwavAAWnlU9bQSVTt-Y4dWE1pq_IfFYKZ3a5zyOg-twYaA4y0oIKspw77YTxPERg0iakkfTDHgCIxCPcrm4mt-1IdPO8rhFZKXg">
+</div>
+<div>
+<h2 class="font-headline-lg text-headline-lg text-primary truncate">Academic Portal</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">VDC Teacher v1.0</p>
+<span class="font-label-sm text-label-sm text-tertiary-fixed-dim bg-tertiary/10 px-2 py-0.5 rounded-full mt-1 inline-block">Active Session</span>
+</div>
+</div>
+<a class="flex items-center gap-4 px-6 py-4 mx-2 rounded-r-full text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-colors active:opacity-80" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">home</span>
+<span class="font-label-lg text-label-lg">Dashboard</span>
+</a>
+<a class="flex items-center gap-4 px-6 py-4 mx-2 rounded-r-full text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-colors active:opacity-80" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">check_circle</span>
+<span class="font-label-lg text-label-lg">Attendance</span>
+</a>
+<a class="flex items-center gap-4 px-6 py-4 mx-2 rounded-r-full text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-colors active:opacity-80" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">edit_note</span>
+<span class="font-label-lg text-label-lg">Marks Entry</span>
+</a>
+<a class="flex items-center gap-4 px-6 py-4 mx-2 rounded-r-full bg-secondary-container dark:bg-on-secondary-container text-on-secondary-container dark:text-secondary-container font-semibold transition-colors active:opacity-80" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">bar_chart</span>
+<span class="font-label-lg text-label-lg">Reports</span>
+</a>
+<a class="flex items-center gap-4 px-6 py-4 mx-2 rounded-r-full text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-colors active:opacity-80 mt-auto" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">settings</span>
+<span class="font-label-lg text-label-lg">Settings</span>
+</a>
+</nav>
+<!-- Main Content Area -->
+<main class="flex-1 w-full md:ml-80 flex flex-col min-h-screen">
+<!-- Top App Bar -->
+<header class="w-full top-0 sticky bg-surface dark:bg-surface-dim border-b border-outline-variant dark:border-outline flat no shadows flex justify-between items-center px-margin-mobile md:px-margin-desktop h-16 z-40">
+<button class="md:hidden p-2 -ml-2 text-primary dark:text-primary-fixed-dim hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-colors active:scale-95 duration-100 rounded-full h-touch-target w-touch-target flex items-center justify-center">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<h1 class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed-dim md:hidden">VDC Teacher</h1>
+<h1 class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed-dim hidden md:block">Reports &amp; Analytics</h1>
+<div class="w-8 h-8 rounded-full overflow-hidden bg-surface-variant flex-shrink-0 md:hidden">
+<img alt="Teacher Profile" class="w-full h-full object-cover" data-alt="A professional portrait of a teacher in an academic setting, well-lit, soft depth of field, modern corporate aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCUN5M0q9xYRbWK-8fDudZJye4DZHKvR4OwKV89lujshfki2n5hstTRG551gg93XUYGkjdB7lf4m10d9IrUp4eaB4Z7uXbljscTpolZH-C0VsFMgoxIB74W-eeQUeZf0_NxoWpY9VQUUEGZZlCUMo9O2-cEiFXLqFko59vzSbb_2lGEXh5SnGm04p6HCy1evlGotND3Ap4sE-l3OfZmBSNh25gRyNvpMxILSEezZ8InPi_STuo6d2u8HA">
+</div>
+</header>
+<!-- Scrollable Content -->
+<div class="flex-1 p-margin-mobile md:p-margin-desktop space-y-6 md:space-y-8 max-w-7xl mx-auto w-full">
+<div class="md:hidden mb-2">
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface">Reports &amp; Analytics</h1>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">Overview of academic performance.</p>
+</div>
+<!-- Sticky Filters -->
+<section class="sticky top-16 z-30 bg-background/95 backdrop-blur-sm py-2 -mx-margin-mobile px-margin-mobile md:mx-0 md:px-0">
+<div class="flex gap-4 overflow-x-auto pb-2 scrollbar-hide md:flex-wrap">
+<div class="relative min-w-[150px]">
+<select class="w-full appearance-none bg-surface border border-outline rounded-lg py-3 pl-4 pr-10 font-body-md text-body-md text-on-surface focus:border-primary focus:ring-1 focus:ring-primary h-touch-target">
+<option>Fall 2023</option>
+<option>Spring 2024</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none">expand_more</span>
+</div>
+<div class="relative min-w-[200px]">
+<select class="w-full appearance-none bg-surface border border-outline rounded-lg py-3 pl-4 pr-10 font-body-md text-body-md text-on-surface focus:border-primary focus:ring-1 focus:ring-primary h-touch-target">
+<option>CS101 - Section A</option>
+<option>MATH201 - Section B</option>
+<option>All Classes</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none">expand_more</span>
+</div>
+<div class="relative min-w-[150px]"><select class="w-full appearance-none bg-surface border border-outline rounded-lg py-3 pl-4 pr-10 font-body-md text-body-md text-on-surface focus:border-primary focus:ring-1 focus:ring-primary h-touch-target"><option>All Assessments</option><option>Midterm</option><option>Quiz</option><option>Final</option></select><span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none">expand_more</span></div><div class="relative min-w-[180px]"><select class="w-full appearance-none bg-surface border border-outline rounded-lg py-3 pl-4 pr-10 font-body-md text-body-md text-on-surface focus:border-primary focus:ring-1 focus:ring-primary h-touch-target"><option>All Students</option><option>Top Performers</option><option>Needs Improvement</option></select><span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none">expand_more</span></div><div class="relative min-w-[180px]"><select class="w-full appearance-none bg-surface border border-outline rounded-lg py-3 pl-10 pr-10 font-body-md text-body-md text-on-surface focus:border-primary focus:ring-1 focus:ring-primary h-touch-target"><option>Date Range</option><option>Last 7 Days</option><option>Last 30 Days</option><option>Custom Range...</option></select><span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none">calendar_today</span><span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none">expand_more</span></div></div>
+</section>
+<!-- Summary Cards (Bento style) -->
+<section class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+<div class="bg-surface-container-lowest rounded-[24px] p-6 elevation-1 flex flex-col justify-between h-[160px] relative overflow-hidden group">
+<div class="absolute -right-4 -top-4 w-24 h-24 bg-primary/5 rounded-full blur-xl group-hover:bg-primary/10 transition-colors"></div>
+<div>
+<p class="font-title-md text-title-md text-on-surface-variant flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">groups</span>
+                            Overall Attendance
+                        </p>
+</div>
+<div>
+<div class="flex items-baseline gap-2">
+<span class="font-display-lg text-display-lg text-on-surface">92%</span>
+<span class="font-label-lg text-label-lg text-tertiary flex items-center"><span class="material-symbols-outlined text-[16px]">arrow_upward</span> 2.4%</span>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-lowest rounded-[24px] p-6 elevation-1 flex flex-col justify-between h-[160px] relative overflow-hidden group">
+<div class="absolute -right-4 -top-4 w-24 h-24 bg-secondary/5 rounded-full blur-xl group-hover:bg-secondary/10 transition-colors"></div>
+<div>
+<p class="font-title-md text-title-md text-on-surface-variant flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary">analytics</span>
+                            Avg. Class Performance
+                        </p>
+</div>
+<div>
+<div class="flex items-baseline gap-2">
+<span class="font-display-lg text-display-lg text-on-surface">78%</span>
+<span class="font-label-lg text-label-lg text-error flex items-center"><span class="material-symbols-outlined text-[16px]">arrow_downward</span> 1.2%</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Class Performance Trends -->
+<section class="bg-surface-container-lowest rounded-[24px] p-6 elevation-1">
+<div class="flex justify-between items-center mb-6">
+<h2 class="font-title-lg text-title-lg text-on-surface">Class Performance Trends</h2>
+<button class="h-touch-target w-touch-target flex items-center justify-center rounded-full hover:bg-surface-container-highest text-on-surface-variant transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+<div class="flex gap-4 mb-6">
+<div class="flex items-center gap-2"><div class="w-3 h-3 rounded-full bg-primary"></div><span class="font-label-sm text-on-surface-variant">Top 10% Avg</span></div>
+<div class="flex items-center gap-2"><div class="w-3 h-3 rounded-full bg-secondary-container"></div><span class="font-label-sm text-on-surface-variant">Class Avg</span></div>
+</div>
+<div class="w-full h-64 flex bg-surface-container-lowest relative overflow-hidden">
+<!-- Y axis -->
+<div class="flex flex-col justify-between h-full font-label-sm text-on-surface-variant pb-8 pr-4">
+<span class="">100%</span>
+<span class="">75%</span>
+<span class="">50%</span>
+<span class="">25%</span>
+<span class="">0%</span>
+</div>
+<!-- Chart area -->
+<div class="flex-1 relative h-full">
+<!-- Grid lines -->
+<div class="absolute inset-0 flex flex-col justify-between pb-8">
+<div class="w-full border-t border-outline-variant/30"></div>
+<div class="w-full border-t border-outline-variant/30"></div>
+<div class="w-full border-t border-outline-variant/30"></div>
+<div class="w-full border-t border-outline-variant/30"></div>
+<div class="w-full border-t border-outline-variant/30 mt-[1px]"></div>
+</div>
+<!-- Lines via SVG -->
+<svg class="absolute inset-0 h-[calc(100%-2rem)] w-full overflow-visible" preserveAspectRatio="none" viewBox="0 0 100 100">
+<!-- Top 10% -->
+<polyline class="text-primary" fill="none" points="10,20 30,15 50,10 70,12 90,5" stroke="currentColor" stroke-width="2"></polyline>
+<circle class="text-primary" cx="10" cy="20" fill="currentColor" r="2"></circle>
+<circle class="text-primary" cx="30" cy="15" fill="currentColor" r="2"></circle>
+<circle class="text-primary" cx="50" cy="10" fill="currentColor" r="2"></circle>
+<circle class="text-primary" cx="70" cy="12" fill="currentColor" r="2"></circle>
+<circle class="text-primary" cx="90" cy="5" fill="currentColor" r="2"></circle>
+<!-- Class Avg -->
+<polyline class="text-secondary-container" fill="none" points="10,40 30,35 50,30 70,35 90,25" stroke="currentColor" stroke-width="2"></polyline>
+<circle class="text-secondary-container" cx="10" cy="40" fill="currentColor" r="2"></circle>
+<circle class="text-secondary-container" cx="30" cy="35" fill="currentColor" r="2"></circle>
+<circle class="text-secondary-container" cx="50" cy="30" fill="currentColor" r="2"></circle>
+<circle class="text-secondary-container" cx="70" cy="35" fill="currentColor" r="2"></circle>
+<circle class="text-secondary-container" cx="90" cy="25" fill="currentColor" r="2"></circle>
+</svg>
+<!-- X axis -->
+<div class="absolute bottom-0 w-full flex justify-between font-label-sm text-on-surface-variant">
+<span class="w-[20%] text-center -ml-[10%]">Aug</span>
+<span class="w-[20%] text-center">Sep</span>
+<span class="w-[20%] text-center">Oct</span>
+<span class="w-[20%] text-center">Nov</span>
+<span class="w-[20%] text-center -mr-[10%]">Dec</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Attendance Overview & Recent Reports Bento -->
+<section class="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6">
+<!-- Attendance Overview -->
+<div class="bg-surface-container-lowest rounded-[24px] p-6 elevation-1 flex flex-col">
+<div class="flex justify-between items-center mb-6">
+<h2 class="font-title-lg text-title-lg text-on-surface">Attendance Overview</h2>
+</div>
+<div class="flex gap-4 mb-6">
+<div class="flex items-center gap-2"><div class="w-3 h-3 rounded-sm bg-primary"></div><span class="font-label-sm text-on-surface-variant">Present</span></div>
+<div class="flex items-center gap-2"><div class="w-3 h-3 rounded-sm bg-secondary-container"></div><span class="font-label-sm text-on-surface-variant">Late</span></div>
+<div class="flex items-center gap-2"><div class="w-3 h-3 rounded-sm bg-error-container"></div><span class="font-label-sm text-on-surface-variant">Absent</span></div>
+</div>
+<div class="flex-1 min-h-[220px] flex relative bg-surface-container-lowest overflow-hidden">
+<!-- Y axis -->
+<div class="flex flex-col justify-between h-full font-label-sm text-on-surface-variant pb-8 pr-4">
+<span class="">100</span>
+<span class="">50</span>
+<span class="">0</span>
+</div>
+<!-- Chart area -->
+<div class="flex-1 relative h-full flex justify-around items-end pb-8 pt-2">
+<!-- Grid lines -->
+<div class="absolute inset-0 flex flex-col justify-between pb-8 pt-2">
+<div class="w-full border-t border-outline-variant/30"></div>
+<div class="w-full border-t border-outline-variant/30"></div>
+<div class="w-full border-t border-outline-variant/30 mt-[1px]"></div>
+</div>
+<!-- Bars -->
+<!-- Aug -->
+<div class="w-10 md:w-12 h-[80%] flex flex-col justify-end gap-1 relative z-10">
+<div class="w-full h-[5%] bg-error-container rounded-sm"></div>
+<div class="w-full h-[15%] bg-secondary-container rounded-sm"></div>
+<div class="w-full h-[80%] bg-primary rounded-t-sm"></div>
+<span class="absolute -bottom-7 left-1/2 -translate-x-1/2 font-label-sm text-on-surface-variant">Aug</span>
+</div>
+<!-- Sep -->
+<div class="w-10 md:w-12 h-[90%] flex flex-col justify-end gap-1 relative z-10">
+<div class="w-full h-[2%] bg-error-container rounded-sm"></div>
+<div class="w-full h-[8%] bg-secondary-container rounded-sm"></div>
+<div class="w-full h-[90%] bg-primary rounded-t-sm"></div>
+<span class="absolute -bottom-7 left-1/2 -translate-x-1/2 font-label-sm text-on-surface-variant">Sep</span>
+</div>
+<!-- Oct -->
+<div class="w-10 md:w-12 h-[85%] flex flex-col justify-end gap-1 relative z-10">
+<div class="w-full h-[10%] bg-error-container rounded-sm"></div>
+<div class="w-full h-[10%] bg-secondary-container rounded-sm"></div>
+<div class="w-full h-[80%] bg-primary rounded-t-sm"></div>
+<span class="absolute -bottom-7 left-1/2 -translate-x-1/2 font-label-sm text-on-surface-variant">Oct</span>
+</div>
+<!-- Nov -->
+<div class="w-10 md:w-12 h-[75%] flex flex-col justify-end gap-1 relative z-10">
+<div class="w-full h-[15%] bg-error-container rounded-sm"></div>
+<div class="w-full h-[20%] bg-secondary-container rounded-sm"></div>
+<div class="w-full h-[65%] bg-primary rounded-t-sm"></div>
+<span class="absolute -bottom-7 left-1/2 -translate-x-1/2 font-label-sm text-on-surface-variant">Nov</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Subject Wise Distribution -->
+<div class="bg-surface-container-lowest rounded-[24px] p-6 elevation-1 flex flex-col lg:col-span-2">
+<div class="flex justify-between items-center mb-6">
+<h2 class="font-title-lg text-title-lg text-on-surface">Subject Wise Distribution</h2>
+</div>
+<div class="flex flex-col md:flex-row items-center gap-8 justify-around">
+<div class="relative w-48 h-48 flex-shrink-0">
+<svg class="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+<circle class="text-surface-container-high" cx="50" cy="50" fill="transparent" r="40" stroke="currentColor" stroke-width="16"></circle>
+<!-- 40% Distinction -->
+<circle class="text-primary" cx="50" cy="50" fill="transparent" r="40" stroke="currentColor" stroke-dasharray="251.2" stroke-dashoffset="150.72" stroke-width="16"></circle>
+<!-- 30% First Class -->
+<circle class="text-secondary-container" cx="50" cy="50" fill="transparent" r="40" stroke="currentColor" stroke-dasharray="251.2" stroke-dashoffset="175.84" stroke-width="16" transform="rotate(144 50 50)"></circle>
+<!-- 20% Pass -->
+<circle class="text-tertiary-container" cx="50" cy="50" fill="transparent" r="40" stroke="currentColor" stroke-dasharray="251.2" stroke-dashoffset="200.96" stroke-width="16" transform="rotate(252 50 50)"></circle>
+<!-- 10% Fail -->
+<circle class="text-error" cx="50" cy="50" fill="transparent" r="40" stroke="currentColor" stroke-dasharray="251.2" stroke-dashoffset="226.08" stroke-width="16" transform="rotate(324 50 50)"></circle>
+</svg>
+<div class="absolute inset-0 flex items-center justify-center flex-col">
+<span class="font-display-lg text-[28px] leading-[36px] text-on-surface font-bold">120</span>
+<span class="font-label-sm text-on-surface-variant">Students</span>
+</div>
+</div>
+<div class="flex flex-col gap-4 w-full md:w-auto md:min-w-[250px]">
+<div class="flex justify-between items-center bg-surface p-3 rounded-lg">
+<div class="flex items-center gap-3"><div class="w-4 h-4 rounded-full bg-primary"></div><span class="font-body-md text-on-surface">Distinction (&gt;80%)</span></div>
+<span class="font-title-md text-on-surface">40%</span>
+</div>
+<div class="flex justify-between items-center bg-surface p-3 rounded-lg">
+<div class="flex items-center gap-3"><div class="w-4 h-4 rounded-full bg-secondary-container"></div><span class="font-body-md text-on-surface">First Class (60-80%)</span></div>
+<span class="font-title-md text-on-surface">30%</span>
+</div>
+<div class="flex justify-between items-center bg-surface p-3 rounded-lg">
+<div class="flex items-center gap-3"><div class="w-4 h-4 rounded-full bg-tertiary-container"></div><span class="font-body-md text-on-surface">Pass (40-60%)</span></div>
+<span class="font-title-md text-on-surface">20%</span>
+</div>
+<div class="flex justify-between items-center bg-surface p-3 rounded-lg">
+<div class="flex items-center gap-3"><div class="w-4 h-4 rounded-full bg-error"></div><span class="font-body-md text-on-surface">Fail (&lt;40%)</span></div>
+<span class="font-title-md text-on-surface">10%</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Recent Reports -->
+<div class="bg-surface-container-lowest rounded-[24px] p-6 elevation-1 flex flex-col lg:col-span-2">
+<div class="flex justify-between items-center mb-4">
+<h2 class="font-title-lg text-title-lg text-on-surface">Recent Reports</h2>
+<a class="font-label-lg text-label-lg text-primary hover:underline" href="#">View All</a>
+</div>
+<div class="flex flex-col gap-0">
+<!-- List Item 1 -->
+<div class="flex items-center justify-between py-4 border-b border-outline-variant/50 last:border-0 min-h-[72px]">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">description</span>
+</div>
+<div>
+<h3 class="font-title-md text-title-md text-on-surface">Midterm CS101</h3>
+<div class="flex items-center gap-2 mt-1">
+<span class="w-2 h-2 rounded-full bg-tertiary-fixed-dim"></span>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm">Ready</p>
+</div>
+</div>
+</div>
+<button class="h-touch-target w-touch-target flex items-center justify-center rounded-full hover:bg-surface-container-highest text-on-surface-variant transition-colors">
+<span class="material-symbols-outlined">download</span>
+</button>
+</div>
+<!-- List Item 2 -->
+<div class="flex items-center justify-between py-4 border-b border-outline-variant/50 last:border-0 min-h-[72px]">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">assignment</span>
+</div>
+<div>
+<h3 class="font-title-md text-title-md text-on-surface">Attendance Oct</h3>
+<div class="flex items-center gap-2 mt-1">
+<span class="w-2 h-2 rounded-full bg-tertiary-fixed-dim"></span>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm">Ready</p>
+</div>
+</div>
+</div>
+<button class="h-touch-target w-touch-target flex items-center justify-center rounded-full hover:bg-surface-container-highest text-on-surface-variant transition-colors">
+<span class="material-symbols-outlined">download</span>
+</button>
+</div>
+<!-- List Item 3 -->
+<div class="flex items-center justify-between py-4 border-b border-outline-variant/50 last:border-0 min-h-[72px]">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">hourglass_empty</span>
+</div>
+<div>
+<h3 class="font-title-md text-title-md text-on-surface">Final Grades Prep</h3>
+<div class="flex items-center gap-2 mt-1">
+<span class="w-2 h-2 rounded-full bg-outline-variant"></span>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm">Generating...</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Export Button Area -->
+<section class="flex justify-center pt-4 pb-8">
+<button class="border border-primary text-primary font-label-lg text-label-lg h-[48px] px-6 rounded-lg flex items-center justify-center gap-2 hover:bg-primary/5 transition-colors active:scale-95 duration-100">
+<span class="material-symbols-outlined">file_download</span>
+                    EXPORT DATA
+                </button>
+</section>
+</div>
+</main>
+<!-- Bottom Navigation Bar (Mobile) -->
+<nav class="md:hidden bg-surface-container dark:bg-surface-container-low border-t border-outline-variant dark:border-outline shadow-sm fixed bottom-0 w-full z-50 h-[80px] flex justify-around items-center px-2 pb-safe">
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant px-5 py-1 hover:bg-surface-container-highest dark:hover:bg-surface-container-high transition-all active:scale-90 duration-150 rounded-lg min-h-touch-target min-w-touch-target" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">dashboard</span>
+<span class="font-label-sm text-label-sm mt-1">Dashboard</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant px-5 py-1 hover:bg-surface-container-highest dark:hover:bg-surface-container-high transition-all active:scale-90 duration-150 rounded-lg min-h-touch-target min-w-touch-target" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">how_to_reg</span>
+<span class="font-label-sm text-label-sm mt-1">Attendance</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-secondary-container dark:bg-on-secondary-container text-on-secondary-container dark:text-secondary-container rounded-full px-5 py-1 hover:bg-surface-container-highest dark:hover:bg-surface-container-high transition-all active:scale-90 duration-150 min-h-touch-target min-w-touch-target" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">assessment</span>
+<span class="font-label-sm text-label-sm mt-1">Reports</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant px-5 py-1 hover:bg-surface-container-highest dark:hover:bg-surface-container-high transition-all active:scale-90 duration-150 rounded-lg min-h-touch-target min-w-touch-target" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">description</span>
+<span class="font-label-sm text-label-sm mt-1">Notes</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant px-5 py-1 hover:bg-surface-container-highest dark:hover:bg-surface-container-high transition-all active:scale-90 duration-150 rounded-lg min-h-touch-target min-w-touch-target" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">account_circle</span>
+<span class="font-label-sm text-label-sm mt-1">Profile</span>
+</a>
+</nav>
+
+
+</body></html>

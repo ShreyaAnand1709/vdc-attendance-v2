@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+
+<html class="h-full" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Attendance Entry - Data Structures</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "inverse-on-surface": "#eff1f3",
+                        "on-surface": "#191c1e",
+                        "surface-dim": "#d8dadc",
+                        "error-container": "#ffdad6",
+                        "secondary": "#00629d",
+                        "on-tertiary-container": "#a5f99e",
+                        "on-tertiary": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "outline": "#727783",
+                        "background": "#f7f9fb",
+                        "inverse-surface": "#2d3133",
+                        "primary": "#004d99",
+                        "on-primary-fixed-variant": "#00468c",
+                        "primary-fixed": "#d6e3ff",
+                        "on-secondary": "#ffffff",
+                        "tertiary-container": "#25752b",
+                        "on-secondary-fixed-variant": "#004a78",
+                        "surface-tint": "#005db7",
+                        "on-secondary-container": "#004069",
+                        "surface-container-highest": "#e0e3e5",
+                        "surface-container-low": "#f2f4f6",
+                        "surface-variant": "#e0e3e5",
+                        "on-background": "#191c1e",
+                        "on-primary-fixed": "#001b3d",
+                        "primary-container": "#1565c0",
+                        "on-tertiary-fixed": "#002204",
+                        "on-primary": "#ffffff",
+                        "primary-fixed-dim": "#a9c7ff",
+                        "surface-container": "#eceef0",
+                        "error": "#ba1a1a",
+                        "surface-container-lowest": "#ffffff",
+                        "inverse-primary": "#a9c7ff",
+                        "secondary-fixed": "#cfe5ff",
+                        "surface-bright": "#f7f9fb",
+                        "secondary-fixed-dim": "#99cbff",
+                        "on-tertiary-fixed-variant": "#005312",
+                        "on-primary-container": "#dae5ff",
+                        "secondary-container": "#4fafff",
+                        "outline-variant": "#c2c6d4",
+                        "surface": "#f7f9fb",
+                        "on-secondary-fixed": "#001d34",
+                        "tertiary": "#005c15",
+                        "on-surface-variant": "#424752",
+                        "on-error": "#ffffff",
+                        "tertiary-fixed": "#a3f69c",
+                        "tertiary-fixed-dim": "#88d982",
+                        "surface-container-high": "#e6e8ea"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "16px",
+                        "margin-tablet": "24px",
+                        "touch-target": "48px",
+                        "margin-mobile": "16px",
+                        "unit": "8px",
+                        "margin-desktop": "32px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Inter"],
+                        "title-md": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "body-md": ["Inter"],
+                        "label-lg": ["Inter"],
+                        "title-lg": ["Inter"],
+                        "display-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "600" }],
+                        "title-md": ["16px", { "lineHeight": "24px", "letterSpacing": "0.15px", "fontWeight": "600" }],
+                        "headline-md": ["28px", { "lineHeight": "36px", "fontWeight": "500" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "letterSpacing": "0.5px", "fontWeight": "400" }],
+                        "label-sm": ["11px", { "lineHeight": "16px", "letterSpacing": "0.5px", "fontWeight": "500" }],
+                        "headline-lg-mobile": ["28px", { "lineHeight": "36px", "fontWeight": "600" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.25px", "fontWeight": "400" }],
+                        "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.1px", "fontWeight": "500" }],
+                        "title-lg": ["22px", { "lineHeight": "28px", "fontWeight": "500" }],
+                        "display-lg": ["57px", { "lineHeight": "64px", "letterSpacing": "-0.25px", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .toggle-checkbox:checked {
+            right: 0;
+            border-color: #25752b; /* tertiary-container for present */
+        }
+        .toggle-checkbox:checked + .toggle-label {
+            background-color: #25752b; /* tertiary-container for present */
+        }
+        .toggle-checkbox:not(:checked) {
+            left: 0;
+            border-color: #ba1a1a; /* error for absent */
+        }
+        .toggle-checkbox:not(:checked) + .toggle-label {
+            background-color: #ba1a1a; /* error for absent */
+        }
+        
+        .shadow-elevation-1 {
+            box-shadow: 0 2px 4px rgba(21, 101, 192, 0.05);
+        }
+        .shadow-elevation-2 {
+            box-shadow: 0 6px 12px rgba(21, 101, 192, 0.08);
+        }
+        
+        /* Specific override for the 'Present All' toggle which is blue */
+        #presentAllToggle:checked + .toggle-label-all {
+            background-color: #1565c0; /* primary-container */
+        }
+        #presentAllToggle:checked {
+            border-color: #1565c0;
+        }
+        #presentAllToggle:not(:checked) + .toggle-label-all {
+            background-color: #727783; /* outline */
+        }
+        #presentAllToggle:not(:checked) {
+            border-color: #727783;
+        }
+
+    </style>
+</head>
+<body class="bg-background text-on-background h-full flex flex-col font-sans">
+<!-- TopAppBar -->
+<header class="bg-surface text-primary flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop h-[72px] border-b border-outline-variant shrink-0 z-40 sticky top-0 shadow-elevation-1">
+<div class="flex items-center gap-4">
+<button aria-label="Go back" class="h-touch-target w-touch-target flex items-center justify-center text-on-surface hover:bg-surface-container-low transition-colors rounded-full">
+<span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 0;">arrow_back</span>
+</button>
+<div>
+<h1 class="text-title-lg font-title-lg font-bold text-primary">Data Structures</h1>
+<p class="text-label-sm font-label-sm text-on-surface-variant">CS-301 • Fall 2024</p>
+</div>
+</div>
+<div class="flex items-center">
+<button aria-label="More options" class="h-touch-target w-touch-target flex items-center justify-center text-on-surface hover:bg-surface-container-low transition-colors rounded-full">
+<span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 0;">more_vert</span>
+</button>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 overflow-y-auto pb-32">
+<div class="max-w-3xl mx-auto px-margin-mobile md:px-margin-tablet py-gutter">
+<!-- Controls Section -->
+<div class="bg-surface shadow-elevation-1 rounded-xl p-margin-tablet mb-gutter flex flex-col md:flex-row gap-gutter justify-between items-center sticky top-[72px] z-30">
+<!-- Search -->
+<div class="relative w-full md:w-2/3">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline" style="font-variation-settings: 'FILL' 0;">search</span>
+<input class="w-full h-touch-target pl-10 pr-4 rounded-lg border border-outline focus:border-primary focus:ring-1 focus:ring-primary bg-surface outline-none text-body-lg font-body-lg text-on-surface transition-colors placeholder:text-outline-variant" placeholder="Search students..." type="text"/>
+</div>
+<!-- Present All Toggle -->
+<div class="flex items-center gap-3 w-full md:w-auto justify-end">
+<span class="text-title-md font-title-md text-on-surface">Mark All Present</span>
+<div class="relative inline-block w-14 h-8 align-middle select-none transition duration-200 ease-in">
+<input checked="" class="toggle-checkbox absolute block w-8 h-8 rounded-full bg-white border-4 appearance-none cursor-pointer transition-all duration-300 z-10" id="presentAllToggle" name="toggle" type="checkbox"/>
+<label class="toggle-label-all block overflow-hidden h-8 rounded-full cursor-pointer transition-colors duration-300" for="presentAllToggle"></label>
+</div>
+</div>
+</div>
+<!-- Student List -->
+<div class="flex flex-col gap-unit">
+<!-- Student Row 1 -->
+<div class="bg-surface rounded-lg p-unit pl-4 flex items-center justify-between shadow-sm min-h-[72px] border border-transparent hover:border-outline-variant transition-colors">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-surface-container-highest overflow-hidden shrink-0 flex items-center justify-center text-title-md font-title-md text-primary">
+                            AS
+                        </div>
+<div class="flex flex-col justify-center">
+<span class="text-body-lg font-body-lg font-medium text-on-surface">Alice Smith</span>
+<span class="text-body-md font-body-md text-on-surface-variant">ID: 2024-001</span>
+</div>
+</div>
+<div class="flex items-center justify-center pr-2">
+<div class="relative inline-block w-[72px] h-10 align-middle select-none transition duration-200 ease-in mr-2">
+<input checked="" class="toggle-checkbox absolute block w-10 h-10 rounded-full bg-white border-4 appearance-none cursor-pointer transition-all duration-300 z-10" id="toggle-1" name="toggle-1" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-10 rounded-full cursor-pointer transition-colors duration-300 flex items-center justify-between px-2" for="toggle-1">
+<span class="material-symbols-outlined text-white text-sm" style="font-variation-settings: 'FILL' 1;">check</span>
+<span class="material-symbols-outlined text-white text-sm" style="font-variation-settings: 'FILL' 1;">close</span>
+</label>
+</div>
+</div>
+</div>
+<!-- Student Row 2 -->
+<div class="bg-surface rounded-lg p-unit pl-4 flex items-center justify-between shadow-sm min-h-[72px] border border-transparent hover:border-outline-variant transition-colors">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-surface-container-highest overflow-hidden shrink-0 flex items-center justify-center text-title-md font-title-md text-primary">
+                            BJ
+                        </div>
+<div class="flex flex-col justify-center">
+<span class="text-body-lg font-body-lg font-medium text-on-surface">Bob Johnson</span>
+<span class="text-body-md font-body-md text-on-surface-variant">ID: 2024-002</span>
+</div>
+</div>
+<div class="flex items-center justify-center pr-2">
+<div class="relative inline-block w-[72px] h-10 align-middle select-none transition duration-200 ease-in mr-2">
+<input checked="" class="toggle-checkbox absolute block w-10 h-10 rounded-full bg-white border-4 appearance-none cursor-pointer transition-all duration-300 z-10" id="toggle-2" name="toggle-2" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-10 rounded-full cursor-pointer transition-colors duration-300 flex items-center justify-between px-2" for="toggle-2">
+<span class="material-symbols-outlined text-white text-sm" style="font-variation-settings: 'FILL' 1;">check</span>
+<span class="material-symbols-outlined text-white text-sm" style="font-variation-settings: 'FILL' 1;">close</span>
+</label>
+</div>
+</div>
+</div>
+<!-- Student Row 3 -->
+<div class="bg-surface rounded-lg p-unit pl-4 flex items-center justify-between shadow-sm min-h-[72px] border border-transparent hover:border-outline-variant transition-colors">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-surface-container-highest overflow-hidden shrink-0 flex items-center justify-center text-title-md font-title-md text-primary">
+                            CW
+                        </div>
+<div class="flex flex-col justify-center">
+<span class="text-body-lg font-body-lg font-medium text-on-surface">Charlie Williams</span>
+<span class="text-body-md font-body-md text-on-surface-variant">ID: 2024-003</span>
+</div>
+</div>
+<div class="flex items-center justify-center pr-2">
+<div class="relative inline-block w-[72px] h-10 align-middle select-none transition duration-200 ease-in mr-2">
+<input class="toggle-checkbox absolute block w-10 h-10 rounded-full bg-white border-4 appearance-none cursor-pointer transition-all duration-300 z-10" id="toggle-3" name="toggle-3" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-10 rounded-full cursor-pointer transition-colors duration-300 flex items-center justify-between px-2" for="toggle-3">
+<span class="material-symbols-outlined text-white text-sm" style="font-variation-settings: 'FILL' 1;">check</span>
+<span class="material-symbols-outlined text-white text-sm" style="font-variation-settings: 'FILL' 1;">close</span>
+</label>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Sticky Save Button -->
+<div class="fixed bottom-0 left-0 w-full bg-surface-container-lowest border-t border-outline-variant p-margin-mobile md:p-margin-tablet flex justify-center shadow-elevation-2 z-50">
+<button class="w-full max-w-md h-touch-target bg-primary hover:bg-on-primary-fixed-variant text-on-primary rounded-lg text-title-md font-title-md uppercase transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">save</span>
+            Save Attendance
+        </button>
+</div>
+<script>
+        // Simple script to handle "Mark All Present" toggle functionality
+        const presentAllToggle = document.getElementById('presentAllToggle');
+        const studentToggles = document.querySelectorAll('input[name^="toggle-"]');
+
+        presentAllToggle.addEventListener('change', function() {
+            const isChecked = this.checked;
+            studentToggles.forEach(toggle => {
+                toggle.checked = isChecked;
+            });
+        });
+    </script>
+</body></html>

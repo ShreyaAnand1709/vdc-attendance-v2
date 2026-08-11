@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Test Module - EduManage</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary-fixed-dim": "#99cbff",
+                    "surface-container": "#eceef0",
+                    "secondary-fixed": "#cfe5ff",
+                    "on-background": "#191c1e",
+                    "tertiary": "#005c15",
+                    "inverse-primary": "#a9c7ff",
+                    "outline-variant": "#c2c6d4",
+                    "on-primary-fixed": "#001b3d",
+                    "on-primary-container": "#dae5ff",
+                    "surface": "#f7f9fb",
+                    "primary-container": "#1565c0",
+                    "on-surface": "#191c1e",
+                    "on-primary-fixed-variant": "#00468c",
+                    "error": "#ba1a1a",
+                    "on-tertiary-fixed": "#002204",
+                    "inverse-surface": "#2d3133",
+                    "primary-fixed-dim": "#a9c7ff",
+                    "on-tertiary": "#ffffff",
+                    "surface-tint": "#005db7",
+                    "inverse-on-surface": "#eff1f3",
+                    "secondary-container": "#4fafff",
+                    "on-surface-variant": "#424752",
+                    "surface-variant": "#e0e3e5",
+                    "surface-container-highest": "#e0e3e5",
+                    "secondary": "#00629d",
+                    "surface-dim": "#d8dadc",
+                    "on-tertiary-container": "#a5f99e",
+                    "tertiary-container": "#25752b",
+                    "on-tertiary-fixed-variant": "#005312",
+                    "surface-container-low": "#f2f4f6",
+                    "error-container": "#ffdad6",
+                    "primary": "#004d99",
+                    "on-secondary-fixed-variant": "#004a78",
+                    "primary-fixed": "#d6e3ff",
+                    "surface-container-high": "#e6e8ea",
+                    "tertiary-fixed": "#a3f69c",
+                    "on-error-container": "#93000a",
+                    "on-error": "#ffffff",
+                    "surface-container-lowest": "#ffffff",
+                    "outline": "#727783",
+                    "background": "#f7f9fb",
+                    "on-secondary": "#ffffff",
+                    "on-primary": "#ffffff",
+                    "tertiary-fixed-dim": "#88d982",
+                    "surface-bright": "#f7f9fb",
+                    "on-secondary-fixed": "#001d34",
+                    "on-secondary-container": "#004069"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "touch-target": "48px",
+                    "margin-desktop": "32px",
+                    "margin-tablet": "24px",
+                    "unit": "8px",
+                    "margin-mobile": "16px",
+                    "gutter": "16px"
+            },
+            "fontFamily": {
+                    "title-md": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "display-lg": ["Inter"],
+                    "title-lg": ["Inter"],
+                    "headline-lg-mobile": ["Inter"],
+                    "body-md": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "label-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "title-md": ["16px", {"lineHeight": "24px", "letterSpacing": "0.15px", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "600"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "letterSpacing": "0.5px", "fontWeight": "400"}],
+                    "display-lg": ["57px", {"lineHeight": "64px", "letterSpacing": "-0.25px", "fontWeight": "700"}],
+                    "title-lg": ["22px", {"lineHeight": "28px", "fontWeight": "500"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "600"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.25px", "fontWeight": "400"}],
+                    "label-sm": ["11px", {"lineHeight": "16px", "letterSpacing": "0.5px", "fontWeight": "500"}],
+                    "headline-md": ["28px", {"lineHeight": "36px", "fontWeight": "500"}],
+                    "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.1px", "fontWeight": "500"}]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        .shadow-elevation-1 { box-shadow: 0 2px 4px rgba(21, 101, 192, 0.05); }
+        .shadow-elevation-2 { box-shadow: 0 6px 12px rgba(21, 101, 192, 0.08); }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen pb-20 md:pb-0">
+<!-- TopAppBar -->
+<header class="bg-surface dark:bg-on-surface text-primary dark:text-primary-fixed border-b border-outline-variant dark:border-outline flex justify-between items-center w-full px-margin-mobile h-touch-target docked full-width top-0 z-40 sticky">
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-primary dark:text-primary-fixed hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-colors w-touch-target h-touch-target flex items-center justify-center rounded-full" data-icon="menu">menu</button>
+<h1 class="text-headline-md font-headline-md text-primary dark:text-primary-fixed font-bold">EduManage</h1>
+</div>
+<div class="flex items-center">
+<img alt="Teacher Profile Picture" class="w-10 h-10 rounded-full object-cover" data-alt="A small circular profile picture of a professional teacher wearing business casual attire, well-lit studio lighting, soft neutral background, modern educational aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDWviRoV-ZzX5FVM7VZF9zklaAt3eLq3uo4Yt4PZq5NbsksNxLye6U6fDTyH67mXBK7Z_A0vQUT5VMefLSc5Ga-j71feRTIlaNEBopnNhsLR7U_tQLbDljYhM6_aIgxwXaBMChdWzKoOWaF3slxW667-VtYVRLdfW-4F00_r6pdtlavdLEJkAXAs5NRjK4qhIUgDIRjBmgHaNQGbGHW3JCgRgYIVdfnaVc7BOa6e4Auu-VaZWd-PIqtng"/>
+</div>
+</header>
+<!-- Main Content -->
+<main class="max-w-5xl mx-auto px-margin-mobile md:px-margin-tablet lg:px-margin-desktop py-gutter">
+<div class="mb-gutter">
+<h2 class="text-headline-lg-mobile md:text-headline-lg font-headline-lg-mobile md:font-headline-lg text-on-surface">Test Module</h2>
+<p class="text-body-md font-body-md text-on-surface-variant mt-2">Create a new test or select an existing one to enter marks.</p>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter lg:gap-margin-desktop">
+<!-- Create New Test Section -->
+<section class="lg:col-span-5 flex flex-col gap-unit">
+<div class="bg-surface-container-lowest rounded-xl p-6 shadow-elevation-1 border border-surface-variant flex flex-col h-full">
+<div class="flex items-center gap-3 mb-6">
+<span class="material-symbols-outlined text-primary" data-weight="fill" style="font-variation-settings: 'FILL' 1;">add_circle</span>
+<h3 class="text-title-lg font-title-lg text-on-surface">Create New Test</h3>
+</div>
+<form class="flex flex-col gap-4 flex-grow">
+<!-- Test Title -->
+<div class="flex flex-col gap-1">
+<label class="text-label-lg font-label-lg text-on-surface" for="test_title">Test Title</label>
+<input class="rounded-lg border-outline text-body-md font-body-md focus:ring-primary focus:border-primary h-touch-target px-4 bg-surface" id="test_title" placeholder="e.g., Midterm 1" required="" type="text"/>
+</div>
+<!-- Class Selection -->
+<div class="flex flex-col gap-1">
+<label class="text-label-lg font-label-lg text-on-surface" for="class_select">Class / Subject</label>
+<select class="rounded-lg border-outline text-body-md font-body-md focus:ring-primary focus:border-primary h-touch-target px-4 bg-surface" id="class_select" required="">
+<option disabled="" selected="" value="">Select class...</option>
+<option value="ds">Data Structures (CS-201)</option>
+<option value="algo">Algorithms (CS-301)</option>
+<option value="dbms">Database Systems (CS-401)</option>
+</select>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<!-- Maximum Marks -->
+<div class="flex flex-col gap-1">
+<label class="text-label-lg font-label-lg text-on-surface" for="max_marks">Max Marks</label>
+<input class="rounded-lg border-outline text-body-md font-body-md focus:ring-primary focus:border-primary h-touch-target px-4 bg-surface" id="max_marks" min="1" placeholder="50" required="" type="number"/>
+</div>
+<!-- Date -->
+<div class="flex flex-col gap-1">
+<label class="text-label-lg font-label-lg text-on-surface" for="test_date">Date</label>
+<input class="rounded-lg border-outline text-body-md font-body-md focus:ring-primary focus:border-primary h-touch-target px-4 bg-surface" id="test_date" required="" type="date"/>
+</div>
+</div>
+<div class="mt-auto pt-6">
+<button class="w-full bg-primary text-on-primary rounded-lg h-touch-target text-label-lg font-label-lg font-medium hover:bg-on-primary-fixed-variant transition-colors flex items-center justify-center gap-2 uppercase tracking-wide" type="button">
+<span>Create &amp; Proceed</span>
+<span class="material-symbols-outlined text-[20px]" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+</form>
+</div>
+</section>
+<!-- Recent Tests Section -->
+<section class="lg:col-span-7 flex flex-col gap-unit">
+<div class="flex items-center justify-between mb-2 mt-4 lg:mt-0">
+<h3 class="text-title-lg font-title-lg text-on-surface flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary" data-icon="history">history</span>
+                        Recent Tests
+                    </h3>
+</div>
+<div class="flex flex-col gap-4">
+<!-- Test Card 1 -->
+<div class="bg-surface-container-lowest rounded-xl p-4 md:p-6 shadow-elevation-1 border border-surface-variant hover:border-primary-fixed transition-colors cursor-pointer group relative overflow-hidden">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-secondary rounded-l-xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+<div>
+<div class="flex items-center gap-2 mb-1">
+<span class="bg-primary-container text-on-primary-container text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">CS-201</span>
+<span class="bg-surface-container-highest text-on-surface-variant text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">calendar_today</span>
+                                        Oct 15, 2023
+                                    </span>
+</div>
+<h4 class="text-title-md font-title-md text-on-surface">Data Structures - Midterm 1</h4>
+<p class="text-body-md font-body-md text-on-surface-variant mt-1">Max Marks: 50</p>
+</div>
+<div class="flex items-center gap-4 w-full md:w-auto justify-between md:justify-end">
+<span class="bg-error-container text-on-error-container text-label-sm font-label-sm px-3 py-1.5 rounded-full flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]" data-icon="pending_actions">pending_actions</span>
+                                    Marks Pending
+                                </span>
+<button class="text-primary font-label-lg font-medium hover:text-on-primary-fixed-variant flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                                    Enter <span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Test Card 2 -->
+<div class="bg-surface-container-lowest rounded-xl p-4 md:p-6 shadow-elevation-1 border border-surface-variant hover:border-primary-fixed transition-colors cursor-pointer group relative overflow-hidden">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-secondary rounded-l-xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+<div>
+<div class="flex items-center gap-2 mb-1">
+<span class="bg-primary-container text-on-primary-container text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">CS-301</span>
+<span class="bg-surface-container-highest text-on-surface-variant text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">calendar_today</span>
+                                        Oct 10, 2023
+                                    </span>
+</div>
+<h4 class="text-title-md font-title-md text-on-surface">Algorithms - Quiz 2</h4>
+<p class="text-body-md font-body-md text-on-surface-variant mt-1">Max Marks: 20</p>
+</div>
+<div class="flex items-center gap-4 w-full md:w-auto justify-between md:justify-end">
+<span class="bg-tertiary-container text-on-tertiary-container text-label-sm font-label-sm px-3 py-1.5 rounded-full flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]" data-icon="check_circle">check_circle</span>
+                                    Marks Entered
+                                </span>
+<button class="text-primary font-label-lg font-medium hover:text-on-primary-fixed-variant flex items-center gap-1">
+                                    Edit <span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-16 bg-surface dark:bg-on-surface px-2 pb-safe border-t border-outline-variant dark:border-outline md:hidden">
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant px-4 py-1 hover:bg-surface-container dark:hover:bg-surface-container-high rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="text-label-sm font-label-sm-mobile mt-1">Dashboard</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant px-4 py-1 hover:bg-surface-container dark:hover:bg-surface-container-high rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="how_to_reg">how_to_reg</span>
+<span class="text-label-sm font-label-sm-mobile mt-1">Attendance</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-secondary-container dark:bg-secondary text-on-secondary-container dark:text-on-secondary rounded-full px-4 py-1 Active: scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="assessment" data-weight="fill" style="font-variation-settings: 'FILL' 1;">assessment</span>
+<span class="text-label-sm font-label-sm-mobile mt-1 font-bold">Reports</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant px-4 py-1 hover:bg-surface-container dark:hover:bg-surface-container-high rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="description">description</span>
+<span class="text-label-sm font-label-sm-mobile mt-1">Notes</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant px-4 py-1 hover:bg-surface-container dark:hover:bg-surface-container-high rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="text-label-sm font-label-sm-mobile mt-1">Profile</span>
+</a>
+</nav>
+</body></html>

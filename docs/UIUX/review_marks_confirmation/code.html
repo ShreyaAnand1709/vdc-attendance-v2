@@ -1,0 +1,260 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Review Marks - EduManage</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.filled {
+            font-variation-settings: 'FILL' 1;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-variant": "#e0e3e5",
+                        "on-surface-variant": "#424752",
+                        "on-tertiary": "#ffffff",
+                        "on-surface": "#191c1e",
+                        "on-tertiary-container": "#a5f99e",
+                        "on-secondary-fixed-variant": "#004a78",
+                        "on-secondary-container": "#004069",
+                        "tertiary-fixed": "#a3f69c",
+                        "tertiary": "#005c15",
+                        "on-background": "#191c1e",
+                        "on-secondary-fixed": "#001d34",
+                        "primary-fixed-dim": "#a9c7ff",
+                        "on-tertiary-fixed": "#002204",
+                        "on-tertiary-fixed-variant": "#005312",
+                        "surface-container": "#eceef0",
+                        "primary-container": "#1565c0",
+                        "surface-container-low": "#f2f4f6",
+                        "tertiary-container": "#25752b",
+                        "surface-container-highest": "#e0e3e5",
+                        "on-primary": "#ffffff",
+                        "background": "#f7f9fb",
+                        "tertiary-fixed-dim": "#88d982",
+                        "surface": "#f7f9fb",
+                        "on-error-container": "#93000a",
+                        "inverse-surface": "#2d3133",
+                        "on-primary-fixed-variant": "#00468c",
+                        "outline-variant": "#c2c6d4",
+                        "secondary": "#00629d",
+                        "error": "#ba1a1a",
+                        "on-error": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "on-primary-fixed": "#001b3d",
+                        "primary": "#004d99",
+                        "surface-tint": "#005db7",
+                        "surface-container-high": "#e6e8ea",
+                        "on-primary-container": "#dae5ff",
+                        "secondary-fixed": "#cfe5ff",
+                        "inverse-on-surface": "#eff1f3",
+                        "secondary-container": "#4fafff",
+                        "secondary-fixed-dim": "#99cbff",
+                        "surface-dim": "#d8dadc",
+                        "primary-fixed": "#d6e3ff",
+                        "outline": "#727783",
+                        "surface-bright": "#f7f9fb",
+                        "surface-container-lowest": "#ffffff",
+                        "inverse-primary": "#a9c7ff",
+                        "on-secondary": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-mobile": "16px",
+                        "margin-desktop": "32px",
+                        "gutter": "16px",
+                        "touch-target": "48px",
+                        "margin-tablet": "24px",
+                        "unit": "8px"
+                    },
+                    "fontFamily": {
+                        "title-md": ["Inter"],
+                        "body-md": ["Inter"],
+                        "title-lg": ["Inter"],
+                        "label-lg": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "body-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "title-md": ["16px", { "lineHeight": "24px", "letterSpacing": "0.15px", "fontWeight": "600" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.25px", "fontWeight": "400" }],
+                        "title-lg": ["22px", { "lineHeight": "28px", "fontWeight": "500" }],
+                        "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.1px", "fontWeight": "500" }],
+                        "headline-md": ["28px", { "lineHeight": "36px", "fontWeight": "500" }],
+                        "label-sm": ["11px", { "lineHeight": "16px", "letterSpacing": "0.5px", "fontWeight": "500" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "600" }],
+                        "headline-lg-mobile": ["28px", { "lineHeight": "36px", "fontWeight": "600" }],
+                        "display-lg": ["57px", { "lineHeight": "64px", "letterSpacing": "-0.25px", "fontWeight": "700" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "letterSpacing": "0.5px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background min-h-screen flex flex-col font-body-md antialiased pb-24 md:pb-0">
+<!-- TopAppBar -->
+<header class="bg-surface dark:bg-on-surface flex justify-between items-center w-full px-margin-mobile h-touch-target border-b border-outline-variant dark:border-outline docked full-width top-0 z-40 sticky">
+<div class="flex items-center gap-4">
+<button class="w-touch-target h-touch-target flex items-center justify-center text-primary dark:text-primary-fixed hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-colors rounded-full active:scale-95 duration-100">
+<span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
+</button>
+<h1 class="text-headline-md font-headline-md text-primary dark:text-primary-fixed font-bold">Review Marks</h1>
+</div>
+<button class="h-touch-target px-4 py-2 rounded-lg border border-primary text-primary font-label-lg text-label-lg uppercase hover:bg-primary/5 transition-colors flex items-center justify-center gap-2 mr-2">
+<span class="material-symbols-outlined text-[20px]" data-icon="picture_as_pdf">picture_as_pdf</span>
+<span class="">EXPORT PDF</span>
+</button><div class="w-10 h-10 rounded-full bg-surface-container-highest overflow-hidden">
+<img alt="Teacher Profile Picture" class="w-full h-full object-cover" data-alt="A professional headshot of a teacher smiling warmly in a well-lit modern classroom setting, shot with a shallow depth of field, neutral color palette with subtle academic blue accents in the background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAYhbxXOP6VEo_DaqDe0RgHOewNqXLccKC1qKUJ5wc8bOrXQ39LQIICld62gXxGorLQlpkaX8kFZu7ZuHAS7RzHKGkRaxrFyaHQAbmQZ-HziWFbFL3IYR-aIfJLcWXu6WuCa0Va1T7AU1wTFR5cU6waHEIy8M2-ccsYU0-uTdL5bqnUN8JdFn3zwrQCZ4hFMhi02MtwijqnNwdh0kzcMVRWckCa8Gq4XHxYyGp_HjHxJgHzogxek1j-NQ">
+</div>
+</header>
+<main class="flex-grow flex flex-col px-margin-mobile md:px-margin-desktop py-gutter max-w-4xl mx-auto w-full gap-gutter">
+<!-- Summary Header Card -->
+<section class="bg-surface-container-lowest rounded-[24px] p-6 shadow-[0_2px_4px_rgba(21,101,192,0.05)] border border-outline-variant/30 flex flex-col md:flex-row justify-between gap-6 relative overflow-hidden">
+<div class="absolute inset-0 bg-primary/5 opacity-50 z-0"></div>
+<div class="relative z-10 flex flex-col gap-2 w-full md:w-2/3">
+<h2 class="text-title-lg font-title-lg text-primary">CS301 - Data Structures</h2>
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-[20px]" data-icon="assignment">assignment</span>
+<span class="text-label-lg font-label-lg">Midterm Assessment</span>
+</div>
+<div class="flex items-center gap-2 text-on-surface-variant mt-2">
+<span class="material-symbols-outlined text-[20px]" data-icon="date_range">date_range</span>
+<span class="text-body-md font-body-md">Oct 24, 2024</span>
+</div>
+</div>
+<div class="relative z-10 flex flex-row md:flex-col gap-4 w-full md:w-1/3 justify-between md:justify-start bg-surface p-4 rounded-xl border border-outline-variant/20">
+<div class="flex flex-col">
+<span class="text-label-sm font-label-sm text-on-surface-variant uppercase tracking-wider">Completion</span>
+<div class="flex items-baseline gap-1">
+<span class="text-headline-md font-headline-md text-primary">45</span>
+<span class="text-body-md font-body-md text-on-surface-variant">/ 45</span>
+</div>
+</div>
+<div class="w-[1px] h-full md:w-full md:h-[1px] bg-outline-variant/50"></div>
+<div class="flex flex-col">
+<span class="text-label-sm font-label-sm text-on-surface-variant uppercase tracking-wider">Class Avg</span>
+<div class="flex items-baseline gap-1">
+<span class="text-headline-md font-headline-md text-primary">42.5</span>
+<span class="text-body-md font-body-md text-on-surface-variant">/ 50</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Warning Section -->
+<section class="bg-error-container rounded-lg p-4 flex gap-4 items-start border border-error/20">
+<span class="material-symbols-outlined text-error filled mt-0.5" data-icon="warning">warning</span>
+<div>
+<h3 class="text-label-lg font-label-lg text-on-error-container font-semibold">Review Required</h3>
+<p class="text-body-md font-body-md text-on-error-container mt-1 opacity-90">2 students scored below the passing threshold (20/50). Please verify these marks before finalizing.</p>
+</div>
+</section>
+<!-- Student List -->
+<section class="bg-surface-container-lowest rounded-[24px] shadow-[0_2px_4px_rgba(21,101,192,0.05)] border border-outline-variant/30 flex flex-col overflow-hidden">
+<div class="px-6 py-4 border-b border-outline-variant/30 bg-surface-container-low flex justify-between items-center">
+<h3 class="text-title-md font-title-md text-on-surface">Student Marks</h3>
+<span class="text-label-sm font-label-sm text-on-surface-variant bg-surface-variant px-2 py-1 rounded-full">Max: 50</span>
+</div>
+<div class="flex flex-col divide-y divide-outline-variant/20">
+<!-- Item 1 -->
+<div class="flex items-center justify-between px-6 py-4 hover:bg-surface-container-low transition-colors min-h-[72px]">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-bold text-title-md font-title-md">
+                            AS
+                        </div>
+<div class="flex flex-col">
+<span class="text-body-lg font-body-lg text-on-surface font-medium">Alice Smith</span>
+<span class="text-label-sm font-label-sm text-on-surface-variant">ID: 2021-CS-001</span>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<span class="text-title-lg font-title-lg text-primary font-semibold">48</span>
+</div>
+</div>
+<!-- Item 2 (Warning) -->
+<div class="flex items-center justify-between px-6 py-4 bg-error-container/20 hover:bg-error-container/30 transition-colors min-h-[72px]">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-error-container text-on-error-container flex items-center justify-center font-bold text-title-md font-title-md">
+                            BJ
+                        </div>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="text-body-lg font-body-lg text-on-surface font-medium">Bob Johnson</span>
+<span class="material-symbols-outlined text-error text-[16px] filled" data-icon="error">error</span>
+</div>
+<span class="text-label-sm font-label-sm text-on-surface-variant">ID: 2021-CS-002</span>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<span class="text-title-lg font-title-lg text-error font-bold">18</span>
+</div>
+</div>
+<!-- Item 3 -->
+<div class="flex items-center justify-between px-6 py-4 hover:bg-surface-container-low transition-colors min-h-[72px]">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center font-bold text-title-md font-title-md">
+                            CD
+                        </div>
+<div class="flex flex-col">
+<span class="text-body-lg font-body-lg text-on-surface font-medium">Charlie Davis</span>
+<span class="text-label-sm font-label-sm text-on-surface-variant">ID: 2021-CS-003</span>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<span class="text-title-lg font-title-lg text-primary font-semibold">42</span>
+</div>
+</div>
+<!-- Item 4 -->
+<div class="flex items-center justify-between px-6 py-4 hover:bg-surface-container-low transition-colors min-h-[72px]">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-tertiary-container text-on-tertiary-container flex items-center justify-center font-bold text-title-md font-title-md">
+                            EK
+                        </div>
+<div class="flex flex-col">
+<span class="text-body-lg font-body-lg text-on-surface font-medium">Elena Kors</span>
+<span class="text-label-sm font-label-sm text-on-surface-variant">ID: 2021-CS-004</span>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<span class="text-title-lg font-title-lg text-primary font-semibold">45</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Bottom spacing for fixed action bar -->
+<div class="h-24"></div>
+</main>
+<!-- Fixed Bottom Action Area -->
+<div class="fixed bottom-0 left-0 w-full bg-surface/90 backdrop-blur-md border-t border-outline-variant/30 p-4 md:px-margin-desktop shadow-[0_-4px_12px_rgba(21,101,192,0.05)] z-50 flex justify-center">
+<div class="max-w-4xl w-full flex flex-col md:flex-row justify-end gap-4">
+<button class="h-touch-target px-6 py-2 rounded-lg border border-primary text-primary font-label-lg text-label-lg uppercase hover:bg-primary/5 transition-colors flex items-center justify-center min-w-[140px]">
+                EDIT MARKS
+            </button>
+<button class="h-touch-target px-6 py-2 rounded-lg bg-primary text-on-primary font-label-lg text-label-lg uppercase hover:bg-primary/90 shadow-[0_4px_8px_rgba(21,101,192,0.2)] transition-colors flex items-center justify-center gap-2 min-w-[200px]">
+<span class="material-symbols-outlined text-[20px]" data-icon="check_circle">check_circle</span>
+                CONFIRM &amp; SAVE
+            </button>
+</div>
+</div>
+
+
+</body></html>

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+
+<html class="h-full" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>EduManage - Attendance Success</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "inverse-on-surface": "#eff1f3",
+                        "on-surface": "#191c1e",
+                        "surface-dim": "#d8dadc",
+                        "error-container": "#ffdad6",
+                        "secondary": "#00629d",
+                        "on-tertiary-container": "#a5f99e",
+                        "on-tertiary": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "outline": "#727783",
+                        "background": "#f7f9fb",
+                        "inverse-surface": "#2d3133",
+                        "primary": "#004d99",
+                        "on-primary-fixed-variant": "#00468c",
+                        "primary-fixed": "#d6e3ff",
+                        "on-secondary": "#ffffff",
+                        "tertiary-container": "#25752b",
+                        "on-secondary-fixed-variant": "#004a78",
+                        "surface-tint": "#005db7",
+                        "on-secondary-container": "#004069",
+                        "surface-container-highest": "#e0e3e5",
+                        "surface-container-low": "#f2f4f6",
+                        "surface-variant": "#e0e3e5",
+                        "on-background": "#191c1e",
+                        "on-primary-fixed": "#001b3d",
+                        "primary-container": "#1565c0",
+                        "on-tertiary-fixed": "#002204",
+                        "on-primary": "#ffffff",
+                        "primary-fixed-dim": "#a9c7ff",
+                        "surface-container": "#eceef0",
+                        "error": "#ba1a1a",
+                        "surface-container-lowest": "#ffffff",
+                        "inverse-primary": "#a9c7ff",
+                        "secondary-fixed": "#cfe5ff",
+                        "surface-bright": "#f7f9fb",
+                        "secondary-fixed-dim": "#99cbff",
+                        "on-tertiary-fixed-variant": "#005312",
+                        "on-primary-container": "#dae5ff",
+                        "secondary-container": "#4fafff",
+                        "outline-variant": "#c2c6d4",
+                        "surface": "#f7f9fb",
+                        "on-secondary-fixed": "#001d34",
+                        "tertiary": "#005c15",
+                        "on-surface-variant": "#424752",
+                        "on-error": "#ffffff",
+                        "tertiary-fixed": "#a3f69c",
+                        "tertiary-fixed-dim": "#88d982",
+                        "surface-container-high": "#e6e8ea"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "16px",
+                        "margin-tablet": "24px",
+                        "touch-target": "48px",
+                        "margin-mobile": "16px",
+                        "unit": "8px",
+                        "margin-desktop": "32px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Inter"],
+                        "title-md": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "body-md": ["Inter"],
+                        "label-lg": ["Inter"],
+                        "title-lg": ["Inter"],
+                        "display-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "600" }],
+                        "title-md": ["16px", { "lineHeight": "24px", "letterSpacing": "0.15px", "fontWeight": "600" }],
+                        "headline-md": ["28px", { "lineHeight": "36px", "fontWeight": "500" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "letterSpacing": "0.5px", "fontWeight": "400" }],
+                        "label-sm": ["11px", { "lineHeight": "16px", "letterSpacing": "0.5px", "fontWeight": "500" }],
+                        "headline-lg-mobile": ["28px", { "lineHeight": "36px", "fontWeight": "600" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.25px", "fontWeight": "400" }],
+                        "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.1px", "fontWeight": "500" }],
+                        "title-lg": ["22px", { "lineHeight": "28px", "fontWeight": "500" }],
+                        "display-lg": ["57px", { "lineHeight": "64px", "letterSpacing": "-0.25px", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .success-animation {
+            animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            opacity: 0;
+            transform: scale(0.5);
+        }
+
+        .fade-up {
+            animation: fadeUp 0.6s ease-out forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .delay-100 { animation-delay: 100ms; }
+        .delay-200 { animation-delay: 200ms; }
+        .delay-300 { animation-delay: 300ms; }
+
+        @keyframes popIn {
+            0% { opacity: 0; transform: scale(0.5); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes fadeUp {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="h-full bg-background flex items-center justify-center p-gutter md:p-margin-desktop antialiased">
+<!-- Transactional Screen - No Nav Shell -->
+<main class="w-full max-w-md mx-auto">
+<div class="bg-surface-container-lowest rounded-[24px] p-6 md:p-[24px] shadow-[0_6px_12px_rgba(21,101,192,0.08)] flex flex-col items-center text-center">
+<!-- Icon/Animation -->
+<div class="mb-8 success-animation">
+<div class="w-24 h-24 bg-tertiary-container rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-[48px] text-on-tertiary-container" data-icon="check_circle" data-weight="fill" style="font-variation-settings: 'FILL' 1;">
+                        check_circle
+                    </span>
+</div>
+</div>
+<!-- Text Content -->
+<h1 class="text-headline-md font-headline-md md:text-headline-lg md:font-headline-lg text-on-surface mb-2 fade-up delay-100">
+                Attendance Saved Successfully
+            </h1>
+<p class="text-body-lg font-body-lg text-on-surface-variant mb-8 fade-up delay-200">
+                SMS notifications sent to parents.
+            </p>
+<!-- Actions -->
+<div class="w-full flex flex-col gap-4 fade-up delay-300">
+<button class="w-full h-touch-target bg-primary text-on-primary rounded-lg text-label-lg font-label-lg uppercase tracking-wider flex items-center justify-center transition-transform hover:scale-[0.98] active:scale-95 shadow-[0_2px_4px_rgba(21,101,192,0.05)]">
+                    Return to Dashboard
+                </button>
+<button class="w-full h-touch-target border border-primary text-primary rounded-lg text-label-lg font-label-lg uppercase tracking-wider flex items-center justify-center transition-colors hover:bg-primary-fixed hover:text-on-primary-fixed-variant">
+                    View Reports
+                </button>
+</div>
+</div>
+</main>
+</body></html>

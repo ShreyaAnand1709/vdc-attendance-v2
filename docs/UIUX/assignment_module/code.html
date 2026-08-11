@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Assignment Module</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "secondary-fixed-dim": "#99cbff",
+                      "surface-container": "#eceef0",
+                      "secondary-fixed": "#cfe5ff",
+                      "on-background": "#191c1e",
+                      "tertiary": "#005c15",
+                      "inverse-primary": "#a9c7ff",
+                      "outline-variant": "#c2c6d4",
+                      "on-primary-fixed": "#001b3d",
+                      "on-primary-container": "#dae5ff",
+                      "surface": "#f7f9fb",
+                      "primary-container": "#1565c0",
+                      "on-surface": "#191c1e",
+                      "on-primary-fixed-variant": "#00468c",
+                      "error": "#ba1a1a",
+                      "on-tertiary-fixed": "#002204",
+                      "inverse-surface": "#2d3133",
+                      "primary-fixed-dim": "#a9c7ff",
+                      "on-tertiary": "#ffffff",
+                      "surface-tint": "#005db7",
+                      "inverse-on-surface": "#eff1f3",
+                      "secondary-container": "#4fafff",
+                      "on-surface-variant": "#424752",
+                      "surface-variant": "#e0e3e5",
+                      "surface-container-highest": "#e0e3e5",
+                      "secondary": "#00629d",
+                      "surface-dim": "#d8dadc",
+                      "on-tertiary-container": "#a5f99e",
+                      "tertiary-container": "#25752b",
+                      "on-tertiary-fixed-variant": "#005312",
+                      "surface-container-low": "#f2f4f6",
+                      "error-container": "#ffdad6",
+                      "primary": "#004d99",
+                      "on-secondary-fixed-variant": "#004a78",
+                      "primary-fixed": "#d6e3ff",
+                      "surface-container-high": "#e6e8ea",
+                      "tertiary-fixed": "#a3f69c",
+                      "on-error-container": "#93000a",
+                      "on-error": "#ffffff",
+                      "surface-container-lowest": "#ffffff",
+                      "outline": "#727783",
+                      "background": "#f7f9fb",
+                      "on-secondary": "#ffffff",
+                      "on-primary": "#ffffff",
+                      "tertiary-fixed-dim": "#88d982",
+                      "surface-bright": "#f7f9fb",
+                      "on-secondary-fixed": "#001d34",
+                      "on-secondary-container": "#004069"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "touch-target": "48px",
+                      "margin-desktop": "32px",
+                      "margin-tablet": "24px",
+                      "unit": "8px",
+                      "margin-mobile": "16px",
+                      "gutter": "16px"
+              },
+              "fontFamily": {
+                      "title-md": [
+                              "Inter"
+                      ],
+                      "headline-lg": [
+                              "Inter"
+                      ],
+                      "body-lg": [
+                              "Inter"
+                      ],
+                      "display-lg": [
+                              "Inter"
+                      ],
+                      "title-lg": [
+                              "Inter"
+                      ],
+                      "headline-lg-mobile": [
+                              "Inter"
+                      ],
+                      "body-md": [
+                              "Inter"
+                      ],
+                      "label-sm": [
+                              "Inter"
+                      ],
+                      "headline-md": [
+                              "Inter"
+                      ],
+                      "label-lg": [
+                              "Inter"
+                      ]
+              },
+              "fontSize": {
+                      "title-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "letterSpacing": "0.15px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-lg": [
+                              "32px",
+                              {
+                                      "lineHeight": "40px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-lg": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "letterSpacing": "0.5px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "display-lg": [
+                              "57px",
+                              {
+                                      "lineHeight": "64px",
+                                      "letterSpacing": "-0.25px",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "title-lg": [
+                              "22px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "headline-lg-mobile": [
+                              "28px",
+                              {
+                                      "lineHeight": "36px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "letterSpacing": "0.25px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "label-sm": [
+                              "11px",
+                              {
+                                      "lineHeight": "16px",
+                                      "letterSpacing": "0.5px",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "headline-md": [
+                              "28px",
+                              {
+                                      "lineHeight": "36px",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "label-lg": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "letterSpacing": "0.1px",
+                                      "fontWeight": "500"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+    </script>
+<style>
+        body {
+            background-color: theme('colors.background');
+            color: theme('colors.on-background');
+            -webkit-font-smoothing: antialiased;
+        }
+        /* Hide scrollbar for Chrome, Safari and Opera */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        /* Hide scrollbar for IE, Edge and Firefox */
+        .no-scrollbar {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col md:flex-row font-body-md text-body-md overflow-x-hidden">
+<!-- Top App Bar (Mobile) & Top App Bar (Web) -->
+<header class="bg-surface dark:bg-on-surface docked full-width top-0 flex justify-between items-center w-full px-margin-mobile h-touch-target md:hidden border-b border-outline-variant dark:border-outline flat no shadows shrink-0 sticky z-40">
+<button class="w-touch-target h-touch-target flex items-center justify-center text-primary dark:text-primary-fixed hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-colors rounded-full active:scale-95 duration-100">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+<div class="text-title-lg font-title-lg font-bold text-primary dark:text-primary-fixed">EduManage</div>
+<button class="w-touch-target h-touch-target flex items-center justify-center hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-colors rounded-full active:scale-95 duration-100">
+<img class="w-8 h-8 rounded-full object-cover border border-outline-variant" data-alt="A highly professional and well-lit headshot portrait of a friendly teacher in their early 30s. The teacher is wearing a smart casual outfit, perhaps a light blue collared shirt or a soft gray cardigan, suitable for an academic environment. The background should be slightly blurred, suggesting a modern, brightly lit classroom or office setting with soft natural light streaming in. The image should convey warmth, competence, and reliability." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCSTpKyqURDb_pXo_hhqmhAtgRYAeQrHBV8YzAJi-D8Fsz-q9bDcFuEiPQ9iz6pEFmUbz_q4hHWlywGGdTWKbXb8qTQjL2-3OXEFS_J5l_2OX5igLHbVl02-i-TnwoFY9SEPyh9FYIiazfz5KzyoJ7AZXZaKDCORFPSLb5bOfru6uheF953PZlZdH16zUtzqWxde7IcPmIJltrzDOe-FAG0fAFWiBZsUzoVrR6_FclVIdXf2rGTe8Vb7A"/>
+</button>
+</header>
+<!-- Side Navigation (Web) -->
+<nav class="hidden md:flex flex-col h-full py-gutter bg-surface dark:bg-on-surface shadow-md dark:shadow-none w-80 rounded-r-xl shrink-0 fixed left-0 top-0 bottom-0 z-40 overflow-y-auto no-scrollbar">
+<div class="px-margin-tablet mb-8">
+<div class="flex items-center gap-4 mb-6 left_align">
+<img class="w-12 h-12 rounded-full object-cover border-2 border-primary-container" data-alt="A highly professional and well-lit headshot portrait of a friendly teacher in their early 30s. The teacher is wearing a smart casual outfit, perhaps a light blue collared shirt or a soft gray cardigan, suitable for an academic environment. The background should be slightly blurred, suggesting a modern, brightly lit classroom or office setting with soft natural light streaming in. The image should convey warmth, competence, and reliability." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCUKWMZvjJjgJaylaNhCIqYhX6NU06uewDhwMFT6GCekk2ynx8Yv7QuW6IS88PVfCwXnGuu2r8CgwKfPyd7d7866ces6aJBFfeardBLJpGURC5U5PquewgCeo1cKmA0HrjWNoEt_pho8uuBzpl46cBjueY-m55z6pIoxAeVHM9pQ7lbHSwUHrcZYXDE58-3PdxqYg3uRasFqCisPEKMENQXx6_nZzEvLUZbE1BHFhJQKNpkL5ggDV3uSg"/>
+<div>
+<h2 class="text-title-lg font-title-lg text-primary dark:text-primary-fixed font-bold">Prof. Anderson</h2>
+<p class="text-label-sm font-label-sm text-on-surface-variant dark:text-surface-variant">Senior Faculty, Computer Science</p>
+<p class="text-label-sm font-label-sm text-outline">ID: 2024-FAC-882</p>
+</div>
+</div>
+</div>
+<ul class="flex flex-col gap-2">
+<li>
+<a class="flex items-center gap-4 px-6 py-3 text-on-surface-variant dark:text-surface-variant mx-2 hover:bg-surface-container-high dark:hover:bg-surface-container-highest rounded-full transition-colors active:opacity-80" href="#">
+<span class="material-symbols-outlined" data-icon="calendar_today">calendar_today</span>
+<span class="text-label-lg font-label-lg">Academic Year</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-4 px-6 py-3 text-on-surface-variant dark:text-surface-variant mx-2 hover:bg-surface-container-high dark:hover:bg-surface-container-highest rounded-full transition-colors active:opacity-80" href="#">
+<span class="material-symbols-outlined" data-icon="schedule">schedule</span>
+<span class="text-label-lg font-label-lg">Class Schedule</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-4 px-6 py-3 bg-primary-container dark:bg-primary text-on-primary-container dark:text-on-primary rounded-full mx-2 hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-colors active:opacity-80" href="#">
+<span class="material-symbols-outlined" data-icon="assignment">assignment</span>
+<span class="text-label-lg font-label-lg font-bold">Assignments</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-4 px-6 py-3 text-on-surface-variant dark:text-surface-variant mx-2 hover:bg-surface-container-high dark:hover:bg-surface-container-highest rounded-full transition-colors active:opacity-80" href="#">
+<span class="material-symbols-outlined" data-icon="grade">grade</span>
+<span class="text-label-lg font-label-lg">Internal Marks</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-4 px-6 py-3 text-on-surface-variant dark:text-surface-variant mx-2 hover:bg-surface-container-high dark:hover:bg-surface-container-highest rounded-full transition-colors active:opacity-80" href="#">
+<span class="material-symbols-outlined" data-icon="folder_open">folder_open</span>
+<span class="text-label-lg font-label-lg">Department Files</span>
+</a>
+</li>
+<li class="mt-auto pt-4 border-t border-outline-variant mx-4">
+<a class="flex items-center gap-4 px-6 py-3 text-on-surface-variant dark:text-surface-variant mx-2 hover:bg-surface-container-high dark:hover:bg-surface-container-highest rounded-full transition-colors active:opacity-80" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="text-label-lg font-label-lg">Settings</span>
+</a>
+</li>
+</ul>
+</nav>
+<!-- Main Content Canvas -->
+<main class="flex-1 md:ml-80 pb-24 md:pb-8 pt-4 px-margin-mobile md:px-margin-desktop flex flex-col gap-6 w-full max-w-5xl mx-auto">
+<header class="mb-4">
+<h1 class="text-headline-md font-headline-md md:text-headline-lg md:font-headline-lg text-on-background">Assignment Module</h1>
+<p class="text-body-md font-body-md text-on-surface-variant mt-1">Manage new tasks and track student submissions.</p>
+</header>
+<!-- New Assignment Section (Bento/Card Style) -->
+<section class="bg-surface-container-lowest rounded-xl p-6 shadow-[0_4px_12px_rgba(21,101,192,0.05)] border border-surface-container-high">
+<h2 class="text-title-lg font-title-lg text-on-surface mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" data-icon="add_task">add_task</span>
+                New Assignment
+            </h2>
+<form class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="flex flex-col gap-1 md:col-span-2">
+<label class="text-label-lg font-label-lg text-on-surface-variant" for="assignment-title">Assignment Title</label>
+<input class="h-[48px] px-4 rounded-lg border border-outline-variant bg-transparent focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-shadow text-body-lg font-body-lg text-on-surface placeholder-outline" id="assignment-title" placeholder="e.g., Final Project Proposal" type="text"/>
+</div>
+<div class="flex flex-col gap-1">
+<label class="text-label-lg font-label-lg text-on-surface-variant" for="max-marks">Max Marks</label>
+<input class="h-[48px] px-4 rounded-lg border border-outline-variant bg-transparent focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-shadow text-body-lg font-body-lg text-on-surface placeholder-outline" id="max-marks" placeholder="100" type="number"/>
+</div>
+<div class="flex flex-col gap-1">
+<label class="text-label-lg font-label-lg text-on-surface-variant" for="due-date">Due Date</label>
+<div class="relative">
+<input class="h-[48px] w-full px-4 rounded-lg border border-outline-variant bg-transparent focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-shadow text-body-lg font-body-lg text-on-surface placeholder-outline pr-12" id="due-date" type="date"/>
+<span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-outline pointer-events-none" data-icon="calendar_month">calendar_month</span>
+</div>
+</div>
+</form>
+</section>
+<!-- Recent Assignments Section -->
+<section class="flex flex-col gap-4 mt-4">
+<div class="flex justify-between items-end mb-2">
+<h2 class="text-title-lg font-title-lg text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary" data-icon="history">history</span>
+                    Recent Assignments
+                </h2>
+<button class="text-primary font-label-lg text-label-lg font-medium hover:bg-surface-container-low px-3 py-1 rounded-full transition-colors h-[36px]">View All</button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+<!-- Card 1 -->
+<div class="bg-surface-container-lowest rounded-xl p-6 shadow-[0_2px_8px_rgba(21,101,192,0.04)] border border-surface-container-low flex flex-col hover:shadow-[0_4px_12px_rgba(21,101,192,0.08)] transition-shadow cursor-pointer relative overflow-hidden group">
+<div class="absolute top-0 left-0 w-1 h-full bg-tertiary"></div>
+<div class="flex justify-between items-start mb-4">
+<h3 class="text-title-md font-title-md text-on-surface">Lab Report 4</h3>
+<span class="bg-surface-container px-3 py-1 rounded-full text-label-sm font-label-sm text-on-surface-variant">CS-101</span>
+</div>
+<div class="flex items-center gap-2 mb-1">
+<span class="material-symbols-outlined text-outline text-[18px]" data-icon="group">group</span>
+<p class="text-body-md font-body-md text-on-surface-variant">42/45 Submitted</p>
+</div>
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-outline text-[18px]" data-icon="event">event</span>
+<p class="text-body-md font-body-md text-on-surface-variant">Due: Yesterday</p>
+</div>
+<div class="mt-auto w-full bg-surface-container-highest rounded-full h-1.5 overflow-hidden">
+<div class="bg-tertiary h-full rounded-full" style="width: 93%;"></div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-surface-container-lowest rounded-xl p-6 shadow-[0_2px_8px_rgba(21,101,192,0.04)] border border-surface-container-low flex flex-col hover:shadow-[0_4px_12px_rgba(21,101,192,0.08)] transition-shadow cursor-pointer relative overflow-hidden group">
+<div class="absolute top-0 left-0 w-1 h-full bg-secondary"></div>
+<div class="flex justify-between items-start mb-4">
+<h3 class="text-title-md font-title-md text-on-surface">Midterm Essay</h3>
+<span class="bg-surface-container px-3 py-1 rounded-full text-label-sm font-label-sm text-on-surface-variant">ENG-202</span>
+</div>
+<div class="flex items-center gap-2 mb-1">
+<span class="material-symbols-outlined text-outline text-[18px]" data-icon="group">group</span>
+<p class="text-body-md font-body-md text-on-surface-variant">15/30 Submitted</p>
+</div>
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-outline text-[18px]" data-icon="event">event</span>
+<p class="text-body-md font-body-md text-error">Due: Tomorrow</p>
+</div>
+<div class="mt-auto w-full bg-surface-container-highest rounded-full h-1.5 overflow-hidden">
+<div class="bg-secondary h-full rounded-full" style="width: 50%;"></div>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="bg-surface-container-lowest rounded-xl p-6 shadow-[0_2px_8px_rgba(21,101,192,0.04)] border border-surface-container-low flex flex-col hover:shadow-[0_4px_12px_rgba(21,101,192,0.08)] transition-shadow cursor-pointer relative overflow-hidden group opacity-70">
+<div class="absolute top-0 left-0 w-1 h-full bg-outline"></div>
+<div class="flex justify-between items-start mb-4">
+<h3 class="text-title-md font-title-md text-on-surface">Weekly Quiz 3</h3>
+<span class="bg-surface-container px-3 py-1 rounded-full text-label-sm font-label-sm text-on-surface-variant">MATH-105</span>
+</div>
+<div class="flex items-center gap-2 mb-1">
+<span class="material-symbols-outlined text-outline text-[18px]" data-icon="check_circle">check_circle</span>
+<p class="text-body-md font-body-md text-on-surface-variant">All Graded</p>
+</div>
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-outline text-[18px]" data-icon="event">event</span>
+<p class="text-body-md font-body-md text-on-surface-variant">Completed: Oct 12</p>
+</div>
+<div class="mt-auto w-full bg-surface-container-highest rounded-full h-1.5 overflow-hidden">
+<div class="bg-outline h-full rounded-full" style="width: 100%;"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- Primary Action -->
+<div class="mt-8 flex justify-end">
+<button class="bg-primary hover:bg-on-primary-fixed-variant text-on-primary font-label-lg text-label-lg px-6 h-touch-target rounded-lg flex items-center justify-center gap-2 transition-colors shadow-[0_4px_12px_rgba(21,101,192,0.2)]">
+<span class="material-symbols-outlined" data-icon="edit_document">edit_document</span>
+                ENTRY MARKS
+            </button>
+</div>
+</main>
+<!-- Bottom Navigation Bar (Mobile) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-16 bg-surface dark:bg-on-surface px-2 pb-safe border-t border-outline-variant dark:border-outline flat no shadows">
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant px-4 py-1 hover:bg-surface-container dark:hover:bg-surface-container-high rounded-lg transition-colors w-16" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="dashboard">dashboard</span>
+<span class="text-[10px] font-medium leading-none">Dashboard</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant px-4 py-1 hover:bg-surface-container dark:hover:bg-surface-container-high rounded-lg transition-colors w-16" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="how_to_reg">how_to_reg</span>
+<span class="text-[10px] font-medium leading-none">Attendance</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant px-4 py-1 hover:bg-surface-container dark:hover:bg-surface-container-high rounded-lg transition-colors w-16" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="assessment">assessment</span>
+<span class="text-[10px] font-medium leading-none">Reports</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-secondary-container dark:bg-secondary text-on-secondary-container dark:text-on-secondary rounded-full px-4 py-1 hover:bg-surface-container dark:hover:bg-surface-container-high transition-transform active:scale-95 w-16" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="assignment">assignment</span>
+<span class="text-[10px] font-medium leading-none font-bold">Assignments</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant px-4 py-1 hover:bg-surface-container dark:hover:bg-surface-container-high rounded-lg transition-colors w-16" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="person">person</span>
+<span class="text-[10px] font-medium leading-none">Profile</span>
+</a>
+</nav>
+</body></html>

@@ -45,7 +45,7 @@ type TeacherSubject = {
 
 type AttendanceStatus = 'present' | 'absent';
 type DashboardModule = 'dashboard' | 'attendance' | 'reports' | 'assignments' | 'tests';
-type ReportPeriod = 'monthly' | 'quarterly';
+type ReportPeriod = 'daily' | 'monthly' | 'quarterly';
 
 type ReportStudent = {
   id: string;
@@ -54,6 +54,7 @@ type ReportStudent = {
   attended: number;
   total: number;
   percentage: number;
+  status?: AttendanceStatus;
 };
 
 type AssignmentStudent = {
@@ -692,18 +693,24 @@ export default function HomeScreen() {
     const now = new Date();
     const quarterStartMonth = Math.floor(now.getMonth() / 3) * 3;
     const start =
-      period === 'monthly'
+      period === 'daily'
+        ? new Date(now.getFullYear(), now.getMonth(), now.getDate())
+        : period === 'monthly'
         ? new Date(now.getFullYear(), now.getMonth(), 1)
         : new Date(now.getFullYear(), quarterStartMonth, 1);
     const end =
-      period === 'monthly'
+      period === 'daily'
+        ? new Date(now.getFullYear(), now.getMonth(), now.getDate())
+        : period === 'monthly'
         ? new Date(now.getFullYear(), now.getMonth() + 1, 0)
         : new Date(now.getFullYear(), quarterStartMonth + 3, 0);
 
     return {
       end: toDateString(end),
       label:
-        period === 'monthly'
+        period === 'daily'
+          ? `Today, ${toDateString(now)}`
+          : period === 'monthly'
           ? now.toLocaleString('default', { month: 'long', year: 'numeric' })
           : `Quarter ${Math.floor(now.getMonth() / 3) + 1}, ${now.getFullYear()}`,
       start: toDateString(start),
@@ -760,6 +767,12 @@ export default function HomeScreen() {
     const totalClasses = sessionIds.length;
     const attendedByStudent = new Map<string, number>();
 
+    if (reportPeriod === 'daily' && sessionIds.length === 0) {
+      setReportRows([]);
+      setReportLoading(false);
+      return;
+    }
+
     if (sessionIds.length > 0) {
       const { data: records, error: recordsError } = await supabase
         .from('attendance_records')
@@ -779,6 +792,42 @@ export default function HomeScreen() {
             (attendedByStudent.get(record.student_id) ?? 0) + 1,
           );
         }
+      }
+
+      if (reportPeriod === 'daily') {
+        const statusByStudent = new Map<string, AttendanceStatus>();
+
+        for (const record of records ?? []) {
+          if (record.status === 'present' || record.status === 'absent') {
+            statusByStudent.set(record.student_id, record.status);
+          }
+        }
+
+        const dailyRows = ((rosterData ?? []) as {
+          student_id: string;
+          roll_number: string | null;
+          students: { full_name: string } | { full_name: string }[] | null;
+        }[])
+          .filter((item) => statusByStudent.has(item.student_id))
+          .map((item) => {
+            const student = Array.isArray(item.students) ? item.students[0] : item.students;
+            const status = statusByStudent.get(item.student_id);
+
+            return {
+              attended: status === 'present' ? 1 : 0,
+              fullName: student?.full_name ?? 'Unnamed student',
+              id: item.student_id,
+              percentage: status === 'present' ? 100 : 0,
+              rollNumber: item.roll_number,
+              status,
+              total: 1,
+            };
+          })
+          .sort(compareReportRows);
+
+        setReportRows(dailyRows);
+        setReportLoading(false);
+        return;
       }
     }
 
@@ -823,18 +872,46 @@ export default function HomeScreen() {
 
     const range = getReportDateRange(reportPeriod);
     const rowsHtml = reportRows
-      .map(
-        (student) => `
-          <tr>
-            <td>${student.rollNumber ?? ''}</td>
-            <td>${escapeHtml(student.fullName)}</td>
-            <td>${student.attended}</td>
-            <td>${student.total}</td>
-            <td>${student.percentage}%</td>
-          </tr>
-        `,
+      .map((student) =>
+        reportPeriod === 'daily'
+          ? `
+            <tr>
+              <td>${student.rollNumber ?? ''}</td>
+              <td>${escapeHtml(student.fullName)}</td>
+              <td>${student.status === 'present' ? 'Present' : 'Absent'}</td>
+            </tr>
+          `
+          : `
+            <tr>
+              <td>${student.rollNumber ?? ''}</td>
+              <td>${escapeHtml(student.fullName)}</td>
+              <td>${student.attended}</td>
+              <td>${student.total}</td>
+              <td>${student.percentage}%</td>
+            </tr>
+          `,
       )
       .join('');
+    const dailyPresentCount = reportRows.filter((student) => student.status === 'present').length;
+    const dailyAbsentCount = reportRows.filter((student) => student.status === 'absent').length;
+    const tableHead =
+      reportPeriod === 'daily'
+        ? `
+          <tr>
+            <th>Roll No.</th>
+            <th>Student Name</th>
+            <th>Status</th>
+          </tr>
+        `
+        : `
+          <tr>
+            <th>Roll No.</th>
+            <th>Student Name</th>
+            <th>Attended</th>
+            <th>Total</th>
+            <th>Percentage</th>
+          </tr>
+        `;
 
     const html = `
       <html>
@@ -854,16 +931,15 @@ export default function HomeScreen() {
             Class: ${escapeHtml(reportClass.name)}<br />
             Subject: ${escapeHtml(reportSubject)}<br />
             Period: ${escapeHtml(range.label)}
+            ${
+              reportPeriod === 'daily'
+                ? `<br />Present: ${dailyPresentCount}<br />Absent: ${dailyAbsentCount}`
+                : ''
+            }
           </div>
           <table>
             <thead>
-              <tr>
-                <th>Roll No.</th>
-                <th>Student Name</th>
-                <th>Attended</th>
-                <th>Total</th>
-                <th>Percentage</th>
-              </tr>
+              ${tableHead}
             </thead>
             <tbody>${rowsHtml}</tbody>
           </table>
@@ -1226,6 +1302,23 @@ export default function HomeScreen() {
                     <View style={styles.subjectButtons}>
                       <Pressable
                         onPress={() => {
+                          setReportPeriod('daily');
+                          setReportRows([]);
+                        }}
+                        style={[
+                          styles.subjectButton,
+                          reportPeriod === 'daily' && styles.subjectButtonActive,
+                        ]}>
+                        <Text
+                          style={[
+                            styles.subjectButtonText,
+                            reportPeriod === 'daily' && styles.activeAttendanceButtonText,
+                          ]}>
+                          Daily
+                        </Text>
+                      </Pressable>
+                      <Pressable
+                        onPress={() => {
                           setReportPeriod('monthly');
                           setReportRows([]);
                         }}
@@ -1280,7 +1373,11 @@ export default function HomeScreen() {
                     <View style={styles.submitPanel}>
                       <Text style={styles.className}>{getReportDateRange(reportPeriod).label}</Text>
                       <Text style={styles.classMeta}>
-                        {reportRows.length} students - {reportSubject}
+                        {reportPeriod === 'daily'
+                          ? `${reportRows.filter((row) => row.status === 'present').length} present, ${
+                              reportRows.filter((row) => row.status === 'absent').length
+                            } absent - ${reportSubject}`
+                          : `${reportRows.length} students - ${reportSubject}`}
                       </Text>
                       <Pressable onPress={generateReportPdf} style={styles.primaryButton}>
                         <Text style={styles.primaryButtonText}>Generate PDF</Text>
@@ -1299,10 +1396,21 @@ export default function HomeScreen() {
               <View style={styles.studentText}>
                 <Text style={styles.studentName}>{item.fullName}</Text>
                 <Text style={styles.studentMeta}>
-                  {item.attended}/{item.total} classes attended
+                  {reportPeriod === 'daily'
+                    ? item.status === 'present'
+                      ? 'Present'
+                      : 'Absent'
+                    : `${item.attended}/${item.total} classes attended`}
                 </Text>
               </View>
-              <Text style={styles.percentageText}>{item.percentage}%</Text>
+              <Text
+                style={[
+                  styles.percentageText,
+                  reportPeriod === 'daily' &&
+                    (item.status === 'present' ? styles.presentStatusText : styles.absentStatusText),
+                ]}>
+                {reportPeriod === 'daily' ? (item.status === 'present' ? 'P' : 'A') : `${item.percentage}%`}
+              </Text>
             </View>
           )}
           ListEmptyComponent={
@@ -1820,6 +1928,12 @@ const styles = StyleSheet.create({
     color: '#1F6F5B',
     fontSize: 18,
     fontWeight: '900',
+  },
+  presentStatusText: {
+    color: '#1F6F5B',
+  },
+  absentStatusText: {
+    color: '#C2410C',
   },
   marksInput: {
     backgroundColor: '#F8FAF7',

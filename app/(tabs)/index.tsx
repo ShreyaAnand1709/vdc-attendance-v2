@@ -1,3 +1,5 @@
+import * as Print from 'expo-print';
+import * as Sharing from 'expo-sharing';
 import { useEffect, useMemo, useState } from 'react';
 import {
   ActivityIndicator,
@@ -12,8 +14,6 @@ import {
   TextInput,
   View,
 } from 'react-native';
-import * as Print from 'expo-print';
-import * as Sharing from 'expo-sharing';
 
 import { supabase } from '@/lib/supabase';
 
@@ -330,13 +330,24 @@ export default function HomeScreen() {
       student_id: student.id,
     }));
 
-    const { error: recordsError } = await supabase.from('attendance_records').insert(records);
+    const { error: recordsError } = await supabase
+  .from('attendance_records')
+  .insert(records);
 
-    if (recordsError) {
-      Alert.alert('Submit failed', recordsError.message);
-      setSubmittingAttendance(false);
-      return;
-    }
+if (recordsError) {
+  const { error: cleanupError } = await supabase
+    .from('attendance_sessions')
+    .delete()
+    .eq('id', session.id);
+
+  const errorMessage = cleanupError
+    ? `${recordsError.message} Cleanup also failed: ${cleanupError.message}`
+    : recordsError.message;
+
+  Alert.alert('Submit failed', errorMessage);
+  setSubmittingAttendance(false);
+  return;
+}
 
     const { data: smsResult, error: smsError } = await supabase.functions.invoke(
       'send-absence-sms',

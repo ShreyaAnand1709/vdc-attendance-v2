@@ -1,9 +1,10 @@
 import * as Print from 'expo-print';
 import * as Sharing from 'expo-sharing';
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   ActivityIndicator,
   Alert,
+  BackHandler,
   FlatList,
   Image,
   KeyboardAvoidingView,
@@ -63,6 +64,23 @@ type AssignmentStudent = {
   fullName: string;
 };
 
+type RosterEnrollmentRow = {
+  student_id: string;
+  roll_number: string | null;
+  students:
+    | {
+        full_name: string;
+        student_reference_number?: string | null;
+        gender?: string | null;
+      }
+    | {
+        full_name: string;
+        student_reference_number?: string | null;
+        gender?: string | null;
+      }[]
+    | null;
+};
+
 export default function HomeScreen() {
   const [email, setEmail] = useState('swatianand3112@gmail.com');
   const [password, setPassword] = useState('');
@@ -97,6 +115,13 @@ export default function HomeScreen() {
   const [assignmentLoading, setAssignmentLoading] = useState(false);
   const [signingIn, setSigningIn] = useState(false);
   const [submittingAttendance, setSubmittingAttendance] = useState(false);
+  const routeKey = `${activeModule}:${selectedClass?.id ?? ''}:${reportClass?.id ?? ''}:${
+    assignmentClass?.id ?? ''
+  }`;
+  const lastWebRouteKeyRef = useRef('');
+  const skipNextWebHistoryPushRef = useRef(false);
+  const subjectsByClassRef = useRef<Record<string, string[]>>({});
+  const rosterByClassRef = useRef<Record<string, RosterStudent[]>>({});
 
   const classCount = useMemo(() => classes.length, [classes.length]);
   const markedCount = useMemo(() => Object.keys(attendanceMarks).length, [attendanceMarks]);
@@ -130,6 +155,89 @@ export default function HomeScreen() {
 
     return () => listener.subscription.unsubscribe();
   }, []);
+
+  const goBackInApp = useCallback(() => {
+    if (selectedClass) {
+      setSelectedClass(null);
+      return true;
+    }
+
+    if (reportClass) {
+      setReportClass(null);
+      setReportSubjects([]);
+      setReportSubject('');
+      setReportRows([]);
+      return true;
+    }
+
+    if (assignmentClass) {
+      resetAssignmentState();
+      return true;
+    }
+
+    if (activeModule !== 'dashboard') {
+      setSelectedClass(null);
+      setRoster([]);
+      setSubjects([]);
+      setSelectedSubject('');
+      setAttendanceMarks({});
+      resetReportState();
+      resetAssignmentState();
+      setActiveModule('dashboard');
+      return true;
+    }
+
+    return false;
+  }, [activeModule, assignmentClass, reportClass, selectedClass]);
+
+  useEffect(() => {
+    if (Platform.OS !== 'android') {
+      return;
+    }
+
+    const subscription = BackHandler.addEventListener('hardwareBackPress', goBackInApp);
+    return () => subscription.remove();
+  }, [goBackInApp]);
+
+  useEffect(() => {
+    if (Platform.OS !== 'web' || typeof window === 'undefined') {
+      return;
+    }
+
+    const onPopState = () => {
+      skipNextWebHistoryPushRef.current = true;
+      goBackInApp();
+    };
+
+    window.addEventListener('popstate', onPopState);
+    return () => window.removeEventListener('popstate', onPopState);
+  }, [goBackInApp]);
+
+  useEffect(() => {
+    if (Platform.OS !== 'web' || typeof window === 'undefined') {
+      return;
+    }
+
+    if (!lastWebRouteKeyRef.current) {
+      lastWebRouteKeyRef.current = routeKey;
+      window.history.replaceState({ routeKey }, '', window.location.href);
+      return;
+    }
+
+    if (lastWebRouteKeyRef.current === routeKey) {
+      return;
+    }
+
+    lastWebRouteKeyRef.current = routeKey;
+
+    if (skipNextWebHistoryPushRef.current) {
+      skipNextWebHistoryPushRef.current = false;
+      window.history.replaceState({ routeKey }, '', window.location.href);
+      return;
+    }
+
+    window.history.pushState({ routeKey }, '', window.location.href);
+  }, [routeKey]);
 
   async function loadTeacherData() {
     setLoading(true);
@@ -186,29 +294,30 @@ export default function HomeScreen() {
     setLoading(false);
   }
 
-  async function loadRoster(classItem: TeacherClass) {
-    setSelectedClass(classItem);
-    setRoster([]);
-    setSubjects([]);
-    setSelectedSubject('');
-    setAttendanceMarks({});
-    setRosterLoading(true);
-
-    const { data: subjectData, error: subjectError } = await supabase
-      .from('teacher_subjects')
-      .select('subject_name')
-      .eq('class_id', classItem.id)
-      .order('subject_name');
-
-    if (subjectError) {
-      Alert.alert('Subject loading error', subjectError.message);
-      setRosterLoading(false);
-      return;
+  async function getSubjectsForClass(classId: string) {
+    if (subjectsByClassRef.current[classId]) {
+      return { data: subjectsByClassRef.current[classId], error: null };
     }
 
-    const classSubjects = ((subjectData ?? []) as TeacherSubject[]).map((item) => item.subject_name);
-    setSubjects(classSubjects);
-    setSelectedSubject(classSubjects.length === 1 ? classSubjects[0] : '');
+    const { data, error } = await supabase
+      .from('teacher_subjects')
+      .select('subject_name')
+      .eq('class_id', classId)
+      .order('subject_name');
+
+    if (error) {
+      return { data: null, error };
+    }
+
+    const classSubjects = ((data ?? []) as TeacherSubject[]).map((item) => item.subject_name);
+    subjectsByClassRef.current[classId] = classSubjects;
+    return { data: classSubjects, error: null };
+  }
+
+  async function getRosterForClass(classId: string) {
+    if (rosterByClassRef.current[classId]) {
+      return { data: rosterByClassRef.current[classId], error: null };
+    }
 
     const { data, error } = await supabase
       .from('enrollments')
@@ -223,16 +332,14 @@ export default function HomeScreen() {
         )
       `,
       )
-      .eq('class_id', classItem.id)
+      .eq('class_id', classId)
       .order('roll_number');
 
     if (error) {
-      Alert.alert('Student loading error', error.message);
-      setRosterLoading(false);
-      return;
+      return { data: null, error };
     }
 
-    const students = (data ?? [])
+    const students = ((data ?? []) as RosterEnrollmentRow[])
       .map((item) => {
         const student = Array.isArray(item.students) ? item.students[0] : item.students;
 
@@ -246,7 +353,38 @@ export default function HomeScreen() {
       })
       .sort(compareByRollNumber);
 
-    setRoster(students);
+    rosterByClassRef.current[classId] = students;
+    return { data: students, error: null };
+  }
+
+  async function loadRoster(classItem: TeacherClass) {
+    setSelectedClass(classItem);
+    setRoster([]);
+    setSubjects([]);
+    setSelectedSubject('');
+    setAttendanceMarks({});
+    setRosterLoading(true);
+
+    const { data: classSubjects, error: subjectError } = await getSubjectsForClass(classItem.id);
+
+    if (subjectError) {
+      Alert.alert('Subject loading error', subjectError.message);
+      setRosterLoading(false);
+      return;
+    }
+
+    setSubjects(classSubjects ?? []);
+    setSelectedSubject(classSubjects?.length === 1 ? classSubjects[0] : '');
+
+    const { data: students, error: rosterError } = await getRosterForClass(classItem.id);
+
+    if (rosterError) {
+      Alert.alert('Student loading error', rosterError.message);
+      setRosterLoading(false);
+      return;
+    }
+
+    setRoster(students ?? []);
     setRosterLoading(false);
   }
 
@@ -331,47 +469,57 @@ export default function HomeScreen() {
     }));
 
     const { error: recordsError } = await supabase
-  .from('attendance_records')
-  .insert(records);
+      .from('attendance_records')
+      .insert(records);
 
-if (recordsError) {
-  const { error: cleanupError } = await supabase
-    .from('attendance_sessions')
-    .delete()
-    .eq('id', session.id);
+    if (recordsError) {
+      const { error: cleanupError } = await supabase
+        .from('attendance_sessions')
+        .delete()
+        .eq('id', session.id);
 
-  const errorMessage = cleanupError
-    ? `${recordsError.message} Cleanup also failed: ${cleanupError.message}`
-    : recordsError.message;
+      const errorMessage = cleanupError
+        ? `${recordsError.message} Cleanup also failed: ${cleanupError.message}`
+        : recordsError.message;
 
-  Alert.alert('Submit failed', errorMessage);
-  setSubmittingAttendance(false);
-  return;
-}
-
-    const { data: smsResult, error: smsError } = await supabase.functions.invoke(
-      'send-absence-sms',
-      {
-        body: { sessionId: session.id },
-      },
-    );
-
-    setSubmittingAttendance(false);
-
-    if (smsError) {
-      Alert.alert(
-        'Attendance saved',
-        `${roster.length} students saved successfully, but SMS could not be sent yet. ${smsError.message}`,
-      );
+      Alert.alert('Submit failed', errorMessage);
+      setSubmittingAttendance(false);
       return;
     }
 
+    setSubmittingAttendance(false);
     Alert.alert(
-      'Attendance submitted',
-      `${roster.length} students saved successfully. SMS sent: ${smsResult?.sent ?? 0}. Skipped: ${
-        smsResult?.skipped ?? 0
-      }.`,
+      'Attendance saved',
+      `${roster.length} students saved successfully. SMS is being sent in the background.`,
     );
+
+    const absentCount = records.filter((record) => record.status === 'absent').length;
+
+    if (absentCount === 0) {
+      return;
+    }
+
+    supabase.functions
+      .invoke('send-absence-sms', {
+        body: { sessionId: session.id },
+      })
+      .then(({ data: smsResult, error: smsError }) => {
+        if (smsError) {
+          Alert.alert(
+            'SMS pending',
+            `Attendance is saved, but SMS could not be sent yet. ${smsError.message}`,
+          );
+          return;
+        }
+
+        Alert.alert(
+          'SMS completed',
+          `Absent SMS sent: ${smsResult?.sent ?? 0}. Skipped: ${smsResult?.skipped ?? 0}.`,
+        );
+      })
+      .catch((error: Error) => {
+        Alert.alert('SMS pending', `Attendance is saved, but SMS could not be sent yet. ${error.message}`);
+      });
   }
 
   async function signIn() {
@@ -430,11 +578,7 @@ if (recordsError) {
     setSavedAssignment(null);
     setAssignmentLoading(true);
 
-    const { data: subjectData, error: subjectError } = await supabase
-      .from('teacher_subjects')
-      .select('subject_name')
-      .eq('class_id', classItem.id)
-      .order('subject_name');
+    const { data: classSubjects, error: subjectError } = await getSubjectsForClass(classItem.id);
 
     if (subjectError) {
       Alert.alert('Subject loading error', subjectError.message);
@@ -442,15 +586,10 @@ if (recordsError) {
       return;
     }
 
-    const classSubjects = ((subjectData ?? []) as TeacherSubject[]).map((item) => item.subject_name);
-    setAssignmentSubjects(classSubjects);
-    setAssignmentSubject(classSubjects.length === 1 ? classSubjects[0] : '');
+    setAssignmentSubjects(classSubjects ?? []);
+    setAssignmentSubject(classSubjects?.length === 1 ? classSubjects[0] : '');
 
-    const { data: rosterData, error: rosterError } = await supabase
-      .from('enrollments')
-      .select('student_id, roll_number, students(full_name)')
-      .eq('class_id', classItem.id)
-      .order('roll_number');
+    const { data: rosterData, error: rosterError } = await getRosterForClass(classItem.id);
 
     if (rosterError) {
       Alert.alert('Student loading error', rosterError.message);
@@ -458,20 +597,12 @@ if (recordsError) {
       return;
     }
 
-    const students = ((rosterData ?? []) as {
-      student_id: string;
-      roll_number: string | null;
-      students: { full_name: string } | { full_name: string }[] | null;
-    }[])
-      .map((item) => {
-        const student = Array.isArray(item.students) ? item.students[0] : item.students;
-
-        return {
-          fullName: student?.full_name ?? 'Unnamed student',
-          id: item.student_id,
-          rollNumber: item.roll_number,
-        };
-      })
+    const students = (rosterData ?? [])
+      .map((item) => ({
+        fullName: item.fullName,
+        id: item.id,
+        rollNumber: item.rollNumber,
+      }))
       .sort((first, second) =>
         compareReportRows({
           ...first,
@@ -677,11 +808,7 @@ if (recordsError) {
     setReportRows([]);
     setReportLoading(true);
 
-    const { data, error } = await supabase
-      .from('teacher_subjects')
-      .select('subject_name')
-      .eq('class_id', classItem.id)
-      .order('subject_name');
+    const { data: classSubjects, error } = await getSubjectsForClass(classItem.id);
 
     if (error) {
       Alert.alert('Subject loading error', error.message);
@@ -689,9 +816,8 @@ if (recordsError) {
       return;
     }
 
-    const classSubjects = ((data ?? []) as TeacherSubject[]).map((item) => item.subject_name);
-    setReportSubjects(classSubjects);
-    setReportSubject(classSubjects.length === 1 ? classSubjects[0] : '');
+    setReportSubjects(classSubjects ?? []);
+    setReportSubject(classSubjects?.length === 1 ? classSubjects[0] : '');
     setReportLoading(false);
   }
 
@@ -748,11 +874,7 @@ if (recordsError) {
     setReportLoading(true);
     const range = getReportDateRange(reportPeriod);
 
-    const { data: rosterData, error: rosterError } = await supabase
-      .from('enrollments')
-      .select('student_id, roll_number, students(full_name)')
-      .eq('class_id', reportClass.id)
-      .order('roll_number');
+    const { data: rosterData, error: rosterError } = await getRosterForClass(reportClass.id);
 
     if (rosterError) {
       Alert.alert('Report error', rosterError.message);
@@ -814,22 +936,17 @@ if (recordsError) {
           }
         }
 
-        const dailyRows = ((rosterData ?? []) as {
-          student_id: string;
-          roll_number: string | null;
-          students: { full_name: string } | { full_name: string }[] | null;
-        }[])
-          .filter((item) => statusByStudent.has(item.student_id))
+        const dailyRows = (rosterData ?? [])
+          .filter((item) => statusByStudent.has(item.id))
           .map((item) => {
-            const student = Array.isArray(item.students) ? item.students[0] : item.students;
-            const status = statusByStudent.get(item.student_id);
+            const status = statusByStudent.get(item.id);
 
             return {
               attended: status === 'present' ? 1 : 0,
-              fullName: student?.full_name ?? 'Unnamed student',
-              id: item.student_id,
+              fullName: item.fullName,
+              id: item.id,
               percentage: status === 'present' ? 100 : 0,
-              rollNumber: item.roll_number,
+              rollNumber: item.rollNumber,
               status,
               total: 1,
             };
@@ -842,21 +959,16 @@ if (recordsError) {
       }
     }
 
-    const rows = ((rosterData ?? []) as {
-      student_id: string;
-      roll_number: string | null;
-      students: { full_name: string } | { full_name: string }[] | null;
-    }[])
+    const rows = (rosterData ?? [])
       .map((item) => {
-        const student = Array.isArray(item.students) ? item.students[0] : item.students;
-        const attended = attendedByStudent.get(item.student_id) ?? 0;
+        const attended = attendedByStudent.get(item.id) ?? 0;
 
         return {
           attended,
-          fullName: student?.full_name ?? 'Unnamed student',
-          id: item.student_id,
+          fullName: item.fullName,
+          id: item.id,
           percentage: totalClasses > 0 ? Math.round((attended / totalClasses) * 100) : 0,
-          rollNumber: item.roll_number,
+          rollNumber: item.rollNumber,
           total: totalClasses,
         };
       })

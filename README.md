@@ -1,50 +1,157 @@
-# Welcome to your Expo app 👋
+# VDC Teacher Attendance App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Mobile-first teacher app for Vivekananda Degree College attendance, reports, assignments, tests, and absent-student SMS notifications.
 
-## Get started
+The app is built with Expo SDK 54, React Native, and Supabase. It supports Android APK distribution and an Expo-hosted Progressive Web App for iPhone users.
 
-1. Install dependencies
+## Main features
 
-   ```bash
-   npm install
-   ```
+- Admin-provisioned teacher login through Supabase Auth
+- No public registration flow
+- Teacher-specific class and subject access
+- Attendance marking with `P` for present and `A` for absent
+- Attendance saving with absent SMS notifications through a Supabase Edge Function
+- Daily, monthly, and quarterly attendance reports
+- PDF generation for attendance reports
+- Assignment marks entry and PDF generation
+- Test marks entry and PDF generation
+- Android hardware back button support
+- iPhone/PWA browser back navigation support
 
-2. Start the app
+## Tech stack
 
-   ```bash
-   npx expo start
-   ```
+- Expo SDK 54
+- React Native
+- Expo Router
+- Supabase Auth
+- Supabase Postgres
+- Supabase Row Level Security
+- Supabase Edge Functions
+- Fast2SMS for absent-student parent notifications
+- EAS Build for Android APK
+- EAS Hosting for the PWA
 
-In the output, you'll find options to open the app in a
+## Project setup
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
+Install dependencies:
 
 ```bash
-npm run reset-project
+npm install
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+Create a local environment file:
 
-## Learn more
+```bash
+cp .env.example .env.local
+```
 
-To learn more about developing your project with Expo, look at the following resources:
+Add the public Supabase values:
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+```env
+EXPO_PUBLIC_SUPABASE_URL=your_supabase_project_url
+EXPO_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+```
 
-## Join the community
+Do not put the Supabase service role key or SMS API key in the mobile app environment. Private keys must stay in Supabase secrets.
 
-Join our community of developers creating universal apps.
+## Run locally
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+Start Expo:
+
+```bash
+npx expo start
+```
+
+Then open the app in Expo Go or an Android device/emulator.
+
+## Validate before release
+
+Run TypeScript checks:
+
+```bash
+npx tsc --noEmit
+```
+
+Run lint:
+
+```bash
+npm run lint
+```
+
+Check Expo package compatibility:
+
+```bash
+npx expo install --check
+```
+
+## Android APK build
+
+Build an Android APK with EAS:
+
+```bash
+npx eas-cli build --platform android --profile apk
+```
+
+After the build completes, download the APK from Expo and share it with the Android teachers.
+
+Android APK users do not receive automatic updates. A new APK must be built and installed after app changes.
+
+## iPhone PWA deployment
+
+Export and deploy the web app:
+
+```bash
+npx expo export --platform web
+npx eas-cli deploy --prod
+```
+
+Production PWA URL:
+
+```text
+https://vdc-teacher-app.expo.app
+```
+
+iPhone users can open the URL in Safari and choose:
+
+```text
+Share -> Add to Home Screen
+```
+
+After redeployment, iPhone users can continue using the same URL/Home Screen icon.
+
+## Supabase notes
+
+The database uses teacher-scoped access through Supabase Auth and Row Level Security. Teachers should only access their assigned classes, subjects, students, and records.
+
+Important production rules:
+
+- Keep Row Level Security enabled on exposed tables.
+- Never expose service role keys in the frontend.
+- Store SMS provider secrets only as Supabase Edge Function secrets.
+- Use admin-created teacher accounts only.
+- Do not add a public sign-up screen unless the access model changes.
+
+## SMS flow
+
+When attendance is submitted:
+
+1. Attendance session is saved.
+2. Student attendance records are saved.
+3. The app shows the teacher that attendance has been saved.
+4. Absent-student SMS notifications are sent in the background through the Supabase Edge Function.
+
+This keeps teacher submission fast even when SMS delivery is slower.
+
+## Current deployment model
+
+- Android teachers: install the shared APK manually.
+- iPhone teacher: use the Expo-hosted PWA.
+- Backend: Supabase hosted project.
+
+## Repository
+
+GitHub repository:
+
+```text
+https://github.com/ShreyaAnand1709/vdc-attendance-v2
+```
